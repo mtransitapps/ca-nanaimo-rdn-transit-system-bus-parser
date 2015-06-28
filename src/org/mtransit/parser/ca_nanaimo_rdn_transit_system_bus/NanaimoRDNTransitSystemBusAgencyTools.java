@@ -19,6 +19,7 @@ import org.mtransit.parser.mt.data.MTrip;
 
 // http://bctransit.com/*/footer/open-data
 // http://bctransit.com/servlet/bctransit/data/GTFS.zip
+// http://bct2.baremetal.com:8080/GoogleTransit/BCTransit/google_transit.zip
 public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
@@ -42,8 +43,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		System.out.printf("Generating RDN Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
 
+	private static final String INCLUDE_ONLY_SERVICE_ID_CONTAINS = "NAN";
+
 	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendar.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+			return true;
+		}
 		if (this.serviceIds != null) {
 			return excludeUselessCalendar(gCalendar, this.serviceIds);
 		}
@@ -52,6 +58,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeCalendarDate(GCalendarDate gCalendarDates) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendarDates.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+			return true;
+		}
 		if (this.serviceIds != null) {
 			return excludeUselessCalendarDate(gCalendarDates, this.serviceIds);
 		}
@@ -70,6 +79,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeTrip(GTrip gTrip) {
+		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.service_id.contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
+			return true;
+		}
 		if (this.serviceIds != null) {
 			return excludeUselessTrip(gTrip, this.serviceIds);
 		}
@@ -229,12 +241,12 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return;
 			}
 		} else if (mRoute.id == 9l) {
-			if (gTrip.direction_id == 0) {
+			if (gTrip.direction_id == 1) {
 				mTrip.setHeadsignDirection(MDirectionType.NORTH);
 				return;
 			}
 		} else if (mRoute.id == 12l) {
-			if (gTrip.direction_id == 1) {
+			if (gTrip.direction_id == 0) {
 				mTrip.setHeadsignString(DOVER_NANAIMO_NORTH, gTrip.direction_id);
 				return;
 			}
@@ -276,7 +288,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return;
 			}
 		} else if (mRoute.id == 99l) {
-			if (gTrip.direction_id == 1) {
+			if (gTrip.direction_id == 0) {
+				mTrip.setHeadsignString(WOODGROVE, gTrip.direction_id);
+				return;
+			} else if (gTrip.direction_id == 1) {
 				mTrip.setHeadsignString(DEEP_BAY, gTrip.direction_id);
 				return;
 			}
