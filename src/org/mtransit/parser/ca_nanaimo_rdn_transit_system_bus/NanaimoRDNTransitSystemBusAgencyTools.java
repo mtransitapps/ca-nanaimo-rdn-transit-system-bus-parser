@@ -14,7 +14,7 @@ import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
 import org.mtransit.parser.mt.data.MDirectionType;
 import org.mtransit.parser.mt.data.MRoute;
-import org.mtransit.parser.mt.data.MSpec;
+import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.mt.data.MTrip;
 
 // http://bctransit.com/*/footer/open-data
@@ -36,11 +36,11 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void start(String[] args) {
-		System.out.printf("Generating RDN Transit System bus data...\n");
+		System.out.printf("\nGenerating RDN Transit System bus data...\n");
 		long start = System.currentTimeMillis();
 		this.serviceIds = extractUsefulServiceIds(args, this);
 		super.start(args);
-		System.out.printf("Generating RDN Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+		System.out.printf("\nGenerating RDN Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
 
 	private static final String INCLUDE_ONLY_SERVICE_ID_CONTAINS = "NAN";
@@ -101,10 +101,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public String getRouteLongName(GRoute gRoute) {
 		String routeLongName = gRoute.route_long_name;
-		routeLongName = MSpec.CLEAN_SLASHES.matcher(routeLongName).replaceAll(MSpec.CLEAN_SLASHES_REPLACEMENT);
-		routeLongName = MSpec.cleanNumbers(routeLongName);
-		routeLongName = MSpec.cleanStreetTypes(routeLongName);
-		return MSpec.cleanLabel(routeLongName);
+		routeLongName = CleanUtils.CLEAN_SLASHES.matcher(routeLongName).replaceAll(CleanUtils.CLEAN_SLASHES_REPLACEMENT);
+		routeLongName = CleanUtils.cleanNumbers(routeLongName);
+		routeLongName = CleanUtils.cleanStreetTypes(routeLongName);
+		return CleanUtils.cleanLabel(routeLongName);
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
@@ -325,8 +325,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
 		tripHeadsign = STARTS_WITH_NUMBER.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
-		tripHeadsign = MSpec.cleanStreetTypes(tripHeadsign);
-		return MSpec.cleanLabel(tripHeadsign);
+		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
+		return CleanUtils.cleanLabel(tripHeadsign);
 	}
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
@@ -339,7 +339,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
 		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
-		gStopName = MSpec.cleanStreetTypes(gStopName);
-		return MSpec.cleanLabel(gStopName);
+		gStopName = CleanUtils.cleanStreetTypes(gStopName);
+		return CleanUtils.cleanLabel(gStopName);
 	}
 }
