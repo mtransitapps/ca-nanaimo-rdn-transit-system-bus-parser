@@ -192,16 +192,16 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public ArrayList<MTrip> splitTrip(MRoute mRoute, GTrip gTrip, GSpec gtfs) {
-		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.id)) {
-			return ALL_ROUTE_TRIPS2.get(mRoute.id).getAllTrips();
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
+			return ALL_ROUTE_TRIPS2.get(mRoute.getId()).getAllTrips();
 		}
 		return super.splitTrip(mRoute, gTrip, gtfs);
 	}
 
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
-		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.id)) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.id));
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
@@ -237,10 +237,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
-		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.id)) {
+		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		if (mRoute.id == 1l) {
+		if (mRoute.getId() == 1l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -248,7 +248,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 2l) {
+		} else if (mRoute.getId() == 2l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -256,7 +256,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(HAMMOND_BAY, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 3l) {
+		} else if (mRoute.getId() == 3l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -264,7 +264,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE_CTR, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 4l) {
+		} else if (mRoute.getId() == 4l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -272,12 +272,12 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(COUNTRY_CLUB, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 5l) {
+		} else if (mRoute.getId() == 5l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(FAIRVIEW, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 6l) {
+		} else if (mRoute.getId() == 6l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -285,27 +285,27 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(VI_UNIVERSITY, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 7l) {
+		} else if (mRoute.getId() == 7l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignString(CINNABAR_CEDAR, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 8l) {
+		} else if (mRoute.getId() == 8l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignDirection(MDirectionType.SOUTH);
 				return;
 			}
-		} else if (mRoute.id == 9l) {
+		} else if (mRoute.getId() == 9l) {
 			if (gTrip.getDirectionId() == 1) {
 				mTrip.setHeadsignDirection(MDirectionType.NORTH);
 				return;
 			}
-		} else if (mRoute.id == 12l) {
+		} else if (mRoute.getId() == 12l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOVER_NANAIMO_NORTH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 15l) {
+		} else if (mRoute.getId() == 15l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(VI_UNIVERSITY, gTrip.getDirectionId());
 				return;
@@ -313,7 +313,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 20l) {
+		} else if (mRoute.getId() == 20l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -321,12 +321,12 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 25l) {
+		} else if (mRoute.getId() == 25l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(FERRY_SHUTTLE_BC_FERRIES, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 30l) {
+		} else if (mRoute.getId() == 30l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -334,7 +334,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 40l) {
+		} else if (mRoute.getId() == 40l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -342,7 +342,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 88l) {
+		} else if (mRoute.getId() == 88l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
 				return;
@@ -350,7 +350,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WEMBLEY_MALL, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 93l) {
+		} else if (mRoute.getId() == 93l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(PM, gTrip.getDirectionId());
 				return;
@@ -358,7 +358,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(AM, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 90l) {
+		} else if (mRoute.getId() == 90l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(NANAIMO, gTrip.getDirectionId());
 				return;
@@ -366,7 +366,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(QUALICUM_BEACH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 91l) {
+		} else if (mRoute.getId() == 91l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
@@ -374,7 +374,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(QUALICUM_BEACH, gTrip.getDirectionId());
 				return;
 			}
-		} else if (mRoute.id == 99l) {
+		} else if (mRoute.getId() == 99l) {
 			if (gTrip.getDirectionId() == 0) {
 				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
 				return;
@@ -421,13 +421,11 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern AT = Pattern.compile("( at )", Pattern.CASE_INSENSITIVE);
-	private static final String AT_REPLACEMENT = " / ";
 
 	@Override
 	public String cleanStopName(String gStopName) {
 		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
-		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
+		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
