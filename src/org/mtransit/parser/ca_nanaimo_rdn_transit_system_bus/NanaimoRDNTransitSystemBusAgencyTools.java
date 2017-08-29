@@ -27,9 +27,8 @@ import org.mtransit.parser.mt.data.MRoute;
 import org.mtransit.parser.mt.data.MTrip;
 import org.mtransit.parser.mt.data.MTripStop;
 
-// http://bctransit.com/*/footer/open-data
-// http://bctransit.com/servlet/bctransit/data/GTFS.zip
-// http://bct2.baremetal.com:8080/GoogleTransit/BCTransit/google_transit.zip
+// https://bctransit.com/*/footer/open-data
+// https://bctransit.com/servlet/bctransit/data/GTFS - Nanaimo
 public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
@@ -53,13 +52,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		System.out.printf("\nGenerating RDN Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
 
-	private static final String INCLUDE_ONLY_SERVICE_ID_CONTAINS = "NAN";
 
 	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendar.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
-			return true;
-		}
 		if (this.serviceIds != null) {
 			return excludeUselessCalendar(gCalendar, this.serviceIds);
 		}
@@ -68,9 +63,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeCalendarDate(GCalendarDate gCalendarDates) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gCalendarDates.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
-			return true;
-		}
 		if (this.serviceIds != null) {
 			return excludeUselessCalendarDate(gCalendarDates, this.serviceIds);
 		}
@@ -89,9 +81,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeTrip(GTrip gTrip) {
-		if (INCLUDE_ONLY_SERVICE_ID_CONTAINS != null && !gTrip.getServiceId().contains(INCLUDE_ONLY_SERVICE_ID_CONTAINS)) {
-			return true;
-		}
 		if (this.serviceIds != null) {
 			return excludeUselessTrip(gTrip, this.serviceIds);
 		}
@@ -174,6 +163,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			case 99: return AGENCY_COLOR_GREEN; // agency color (green, not blue)
 			// @formatter:on
 			default:
+				if (isGoodEnoughAccepted()) {
+					return AGENCY_COLOR_BLUE;
+				}
 				System.out.printf("\nUnexpected route color for %s!\n", gRoute);
 				System.exit(-1);
 				return null;
@@ -239,6 +231,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
+		}
+		if (!isGoodEnoughAccepted()) {
+			mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
+			return;
 		}
 		if (mRoute.getId() == 1l) {
 			if (gTrip.getDirectionId() == 0) {
@@ -384,6 +380,16 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			}
 		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
+	}
+
+	@Override
+	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		if (isGoodEnoughAccepted()) {
+			return super.mergeHeadsign(mTrip, mTripToMerge);
+		}
+		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
+		System.exit(-1);
+		return false;
 	}
 
 	private static final String EXCH = "Exch";
