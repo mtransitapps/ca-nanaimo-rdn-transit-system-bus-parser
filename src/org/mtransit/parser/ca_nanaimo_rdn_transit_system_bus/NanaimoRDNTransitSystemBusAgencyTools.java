@@ -1,6 +1,7 @@
 package org.mtransit.parser.ca_nanaimo_rdn_transit_system_bus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +52,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		super.start(args);
 		System.out.printf("\nGenerating RDN Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
-
 
 	@Override
 	public boolean excludeCalendar(GCalendar gCalendar) {
@@ -106,7 +106,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return CleanUtils.cleanLabel(routeLongName);
 	}
 
-	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
+	private static final String AGENCY_COLOR_GREEN = "34B233"; // GREEN (from PDF Corporate Graphic Standards)
 	private static final String AGENCY_COLOR_BLUE = "002C77"; // BLUE (from PDF Corporate Graphic Standards)
 
 	private static final String AGENCY_COLOR = AGENCY_COLOR_GREEN;
@@ -116,21 +116,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return AGENCY_COLOR;
 	}
 
-	private static final String COLOR_F78B1F = "F78B1F";
-	private static final String COLOR_8CC63F = "8CC63F";
-	private static final String COLOR_FB298C = "FB298C";
-	private static final String COLOR_4F6F19 = "4F6F19";
-	private static final String COLOR_8D0B3A = "8D0B3A";
-	private static final String COLOR_77AD98 = "77AD98";
-	private static final String COLOR_B3AA7E = "B3AA7E";
-	private static final String COLOR_0077BF = "0077BF";
-	private static final String COLOR_DD92C4 = "DD92C4";
-	private static final String COLOR_00ADCD = "00ADCD";
-	private static final String COLOR_034476 = "034476";
-	private static final String COLOR_A0228D = "A0228D";
-	private static final String COLOR_FFBB16 = "FFBB16";
-	private static final String COLOR_AB5C3C = "AB5C3C";
-	private static final String COLOR_B5BB19 = "B5BB19";
+	private static final String ROUTE_COLOR_LOCAL = "809699";
+	private static final String ROUTE_COLOR_FREQUENT = "009FC2";
 
 	@Override
 	public String getRouteColor(GRoute gRoute) {
@@ -138,29 +125,24 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			int rsn = Integer.parseInt(gRoute.getRouteShortName());
 			switch (rsn) {
 			// @formatter:off
-			case 1: return COLOR_F78B1F;
-			case 2: return COLOR_0077BF;
-			case 3: return COLOR_8CC63F;
-			case 4: return COLOR_DD92C4;
-			case 5: return COLOR_00ADCD;
-			case 6: return COLOR_034476;
-			case 7: return COLOR_FB298C;
-			case 8: return COLOR_A0228D;
-			case 9: return COLOR_FFBB16;
-			case 10: return COLOR_AB5C3C;
-			case 11: return AGENCY_COLOR_BLUE;
-			case 12: return COLOR_B5BB19;
-			case 15: return COLOR_8D0B3A;
-			case 20: return AGENCY_COLOR_BLUE;
-			case 25: return COLOR_77AD98;
-			case 30: return AGENCY_COLOR_BLUE;
-			case 40: return AGENCY_COLOR_BLUE;
-			case 50: return AGENCY_COLOR_BLUE;
-			case 88: return COLOR_B3AA7E;
-			case 90: return COLOR_4F6F19;
-			case 91: return AGENCY_COLOR_BLUE;
-			case 92: return AGENCY_COLOR_BLUE;
-			case 99: return AGENCY_COLOR_GREEN; // agency color (green, not blue)
+			case 1: return ROUTE_COLOR_LOCAL;
+			case 5: return ROUTE_COLOR_LOCAL;
+			case 6: return ROUTE_COLOR_LOCAL;
+			case 7: return ROUTE_COLOR_LOCAL;
+			case 11: return ROUTE_COLOR_LOCAL;
+			case 15: return ROUTE_COLOR_LOCAL;
+			case 20: return ROUTE_COLOR_LOCAL;
+			case 25: return ROUTE_COLOR_LOCAL;
+			case 30: return ROUTE_COLOR_LOCAL;
+			case 40: return ROUTE_COLOR_FREQUENT;
+			case 50: return ROUTE_COLOR_LOCAL;
+			case 88: return "B3AA7E"; // LIGHT BROWN
+			case 90: return "4F6F19"; // DARK GREEN
+			case 91: return ROUTE_COLOR_LOCAL;
+			case 92: return ROUTE_COLOR_LOCAL; // ?
+			case 97: return ROUTE_COLOR_LOCAL;
+			case 98: return ROUTE_COLOR_LOCAL;
+			case 99: return AGENCY_COLOR_GREEN; // LIGHT GREEN
 			// @formatter:on
 			default:
 				if (isGoodEnoughAccepted()) {
@@ -200,30 +182,63 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	private static final String CINNABAR = "Cinnabar";
 	private static final String CEDAR = "Cedar";
-	private static final String BC_FERRIES = "BC Ferries";
-	private static final String FERRY_SHUTTLE = "Ferry Shuttle";
-	private static final String HAMMOND_BAY = "Hammond Bay";
-	private static final String WOODGROVE_CTR = "Woodgrove Ctr";
 	private static final String COUNTRY_CLUB = "Country Club";
-	private static final String FAIRVIEW = "Fairview";
 	private static final String DOWNTOWN = "Downtown";
-	private static final String CINNABAR_CEDAR = CINNABAR + " / " + CEDAR;
-	private static final String VI_UNIVERSITY = "VI University";
+	private static final String CINNABAR_CEDAR = CINNABAR + " & " + CEDAR;
+	private static final String VI_UNIVERSITY_SHORT = "VIU";
 	private static final String WOODGROVE = "Woodgrove";
-	private static final String FERRY_SHUTTLE_BC_FERRIES = FERRY_SHUTTLE + " / " + BC_FERRIES;
-	private static final String PM = "PM";
-	private static final String AM = "AM";
-	private static final String DEEP_BAY = "Deep Bay";
-	private static final String WEMBLEY_MALL = "Wembley Mall";
-	private static final String NANAIMO = "Nanaimo";
 	private static final String QUALICUM_BEACH = "Qualicum Beach";
-	private static final String NANAIMO_NORTH = "Nanaimo North";
-	private static final String DOVER = "Dover";
-	private static final String DOVER_NANAIMO_NORTH = DOVER + " / " + NANAIMO_NORTH;
+	private static final String WESTWOOD = "Westwood";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(5L, new RouteTripSpec(5L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
+				1, MTrip.HEADSIGN_TYPE_STRING, WESTWOOD) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"109756", // Westbound Arbot at Westwood
+								"109762", // Eastbound Ashlee at Holland
+								"109763", // !=
+								"110520", // <> VIU Exchange Bay D
+								"110101", // !=
+								"110522", // Prideaux Street Exchange Bay B
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"110522", // Prideaux Street Exchange Bay B
+								"110100", // !=
+								"110520", // <> VIU Exchange Bay D
+								"110072", // !=
+								"109756", // Westbound Arbot at Westwood
+						})) //
+				.compileBothTripSort());
+		map2.put(91L, new RouteTripSpec(91L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, //
+				1, MTrip.HEADSIGN_TYPE_STRING, QUALICUM_BEACH) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"110358", // Southbound Jones at Fern Rd W
+								"110388", // Eastbound Jensen Ave E at McCarter
+								"109925", // Woodgrove Centre Exchange Bay D
+								"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+								"109925", // == Woodgrove Centre Exchange Bay D
+								"109924", // !=
+								"110302", // !=
+								"110304", // ==
+								"110307", // !=
+								"110321", // !=
+								"110496", // !=
+								"110322", // ==
+								"110299", // Westbound Jensen Ave E at Craig
+								"110358", // Southbound Jones at Fern Rd W
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -232,158 +247,44 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		if (!isGoodEnoughAccepted()) {
-			mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
-			return;
-		}
-		if (mRoute.getId() == 1l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 2l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(HAMMOND_BAY, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 3l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE_CTR, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 4l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(COUNTRY_CLUB, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 5l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(FAIRVIEW, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 6l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(VI_UNIVERSITY, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 7l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(CINNABAR_CEDAR, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 8l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignDirection(MDirectionType.SOUTH);
-				return;
-			}
-		} else if (mRoute.getId() == 9l) {
-			if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignDirection(MDirectionType.NORTH);
-				return;
-			}
-		} else if (mRoute.getId() == 12l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOVER_NANAIMO_NORTH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 15l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(VI_UNIVERSITY, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 20l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 25l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(FERRY_SHUTTLE_BC_FERRIES, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 30l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 40l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 88l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(DOWNTOWN, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(WEMBLEY_MALL, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 93l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(PM, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(AM, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 90l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(NANAIMO, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(QUALICUM_BEACH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 91l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(QUALICUM_BEACH, gTrip.getDirectionId());
-				return;
-			}
-		} else if (mRoute.getId() == 99l) {
-			if (gTrip.getDirectionId() == 0) {
-				mTrip.setHeadsignString(WOODGROVE, gTrip.getDirectionId());
-				return;
-			} else if (gTrip.getDirectionId() == 1) {
-				mTrip.setHeadsignString(DEEP_BAY, gTrip.getDirectionId());
-				return;
-			}
-		}
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
+		if (mTrip.getRouteId() == 7L) {
+			if (Arrays.asList( //
+					DOWNTOWN, //
+					CINNABAR, //
+					CINNABAR_CEDAR //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(CINNABAR_CEDAR, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 15L) {
+			if (Arrays.asList( //
+					VI_UNIVERSITY_SHORT, //
+					VI_UNIVERSITY_SHORT + "-" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(VI_UNIVERSITY_SHORT, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 20L) {
+			if (Arrays.asList( //
+					COUNTRY_CLUB, // same
+					DOWNTOWN //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
+				return true;
+			} else if (Arrays.asList( //
+					COUNTRY_CLUB, // same
+					WOODGROVE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
+				return true;
+			}
+		}
 		if (isGoodEnoughAccepted()) {
 			return super.mergeHeadsign(mTrip, mTripToMerge);
 		}
@@ -409,11 +310,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern CLEAN_P2 = Pattern.compile("[\\s]*\\)[\\s]*");
 	private static final String CLEAN_P2_REPLACEMENT = ") ";
 
+	private static final Pattern CINNABAR_ = Pattern.compile("((^|\\W){1}(cinnibar)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String CINNABAR_REPLACEMENT = "$2" + CINNABAR + "$4";
+
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
 		if (Utils.isUppercaseOnly(tripHeadsign, true, true)) {
 			tripHeadsign = tripHeadsign.toLowerCase(Locale.ENGLISH);
 		}
+		tripHeadsign = CINNABAR_.matcher(tripHeadsign).replaceAll(CINNABAR_REPLACEMENT);
 		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
 		tripHeadsign = ENDS_WITH_VIA.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = STARTS_WITH_TO.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
@@ -426,7 +331,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
-
 
 	@Override
 	public String cleanStopName(String gStopName) {
