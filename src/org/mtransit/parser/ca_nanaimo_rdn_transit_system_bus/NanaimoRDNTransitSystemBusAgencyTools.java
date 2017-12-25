@@ -158,7 +158,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
-			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
 		}
 		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
 	}
@@ -174,11 +174,12 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()), this);
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
 
+	private static final String EXCHANGE_SHORT = "Exch";
 	private static final String CINNABAR = "Cinnabar";
 	private static final String CEDAR = "Cedar";
 	private static final String COUNTRY_CLUB = "Country Club";
@@ -192,6 +193,22 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(1L, new RouteTripSpec(1L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
+				1, MTrip.HEADSIGN_TYPE_STRING, COUNTRY_CLUB) //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"110512", // Country Club Exchange Bay E
+								"110211", // ++
+								"110509", // Prideaux Street Exchange Bay E
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"110509", // Prideaux Street Exchange Bay E
+								"109787", // ++
+								"110514", // Bay C at Country Club Exchange
+						})) //
+				.compileBothTripSort());
 		map2.put(5L, new RouteTripSpec(5L, //
 				0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
 				1, MTrip.HEADSIGN_TYPE_STRING, WESTWOOD) //
@@ -211,6 +228,39 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								"110520", // <> VIU Exchange Bay D
 								"110072", // !=
 								"109756", // Westbound Arbot at Westwood
+						})) //
+				.compileBothTripSort());
+		map2.put(25L, new RouteTripSpec(25L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
+				1, MTrip.HEADSIGN_TYPE_STRING, "BC Ferries") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+								"110519", // VIU Exchange Bay B VIU
+								"109925", // Woodgrove Centre Exchange Bay D
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"109925", // Woodgrove Centre Exchange Bay D
+								"110516", // ++
+								"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+
+						})) //
+				.compileBothTripSort());
+		map2.put(88L, new RouteTripSpec(88L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Parksville", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Wembley Mall") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"110299", // Westbound Jensen Ave E at Craig
+								"110441", // ++
+								"104058", // Southbound Island highway W at Wembley Mall
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"104058", // Southbound Island highway W at Wembley Mall
+								"110280", // ++
+								"110299", // Westbound Jensen Ave E at Craig
 						})) //
 				.compileBothTripSort());
 		map2.put(91L, new RouteTripSpec(91L, //
@@ -252,7 +302,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		if (mTrip.getRouteId() == 7L) {
+		if (mTrip.getRouteId() == 6L) {
+			if (Arrays.asList( //
+					COUNTRY_CLUB, //
+					DOWNTOWN //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 7L) {
 			if (Arrays.asList( //
 					DOWNTOWN, //
 					CINNABAR, //
@@ -261,9 +319,18 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CINNABAR_CEDAR, mTrip.getHeadsignId()); //
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 11L) {
+			if (Arrays.asList( //
+					"BC Ferries", //
+					"Lantzville" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Lantzville", mTrip.getHeadsignId()); //
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 15L) {
 			if (Arrays.asList( //
 					VI_UNIVERSITY_SHORT, //
+					VI_UNIVERSITY_SHORT + " Only", //
 					VI_UNIVERSITY_SHORT + "-" //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(VI_UNIVERSITY_SHORT, mTrip.getHeadsignId()); //
@@ -284,17 +351,16 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		}
-		if (isGoodEnoughAccepted()) {
-			return super.mergeHeadsign(mTrip, mTripToMerge);
-		}
 		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
 		System.exit(-1);
 		return false;
 	}
 
-	private static final String EXCH = "Exch";
-	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCH + "$4";
+	private static final Pattern EXCHANGE_ = Pattern.compile("((^|\\W){1}(exchange)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCHANGE_SHORT + "$4";
+
+	private static final Pattern VI_UNIVERSITY_ = Pattern.compile("((^|\\W){1}(vi university|viu)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String VI_UNIVERSITY_REPLACEMENT = "$2" + VI_UNIVERSITY_SHORT + "$4";
 
 	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+( \\-)?[\\S]*)", Pattern.CASE_INSENSITIVE);
 
@@ -318,7 +384,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			tripHeadsign = tripHeadsign.toLowerCase(Locale.ENGLISH);
 		}
 		tripHeadsign = CINNABAR_.matcher(tripHeadsign).replaceAll(CINNABAR_REPLACEMENT);
-		tripHeadsign = EXCHANGE.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
+		tripHeadsign = EXCHANGE_.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
+		tripHeadsign = VI_UNIVERSITY_.matcher(tripHeadsign).replaceAll(VI_UNIVERSITY_REPLACEMENT);
 		tripHeadsign = ENDS_WITH_VIA.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = STARTS_WITH_TO.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = AND.matcher(tripHeadsign).replaceAll(AND_REPLACEMENT);
@@ -335,7 +402,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	public String cleanStopName(String gStopName) {
 		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
-		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
+		gStopName = EXCHANGE_.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
 	}
