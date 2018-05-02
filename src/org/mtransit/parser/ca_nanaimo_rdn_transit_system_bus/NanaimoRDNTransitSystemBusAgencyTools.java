@@ -206,7 +206,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"110509", // Prideaux Street Exchange Bay E
 								"109787", // ++
-								"110514", // Bay C at Country Club Exchange
+								"110512", // Country Club Exchange Bay E
 						})) //
 				.compileBothTripSort());
 		map2.put(5L, new RouteTripSpec(5L, //
@@ -269,22 +269,39 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(0, //
 						Arrays.asList(new String[] { //
 						"110358", // Southbound Jones at Fern Rd W
-								"110388", // Eastbound Jensen Ave E at McCarter
-								"109925", // Woodgrove Centre Exchange Bay D
+								"110369", // ==
+								"110370", // !=
+								"110378", // !=
+								"104050", // ==
+								"110388", // ++ Eastbound Jensen Ave E at McCarter
+								"104160", // ==
+								"104169", // !=
+								"110399", // !=
+								"104173", // !=
+								"110415", // ==
+								"110300", // !=
+								"109925", // <> Woodgrove Centre Exchange Bay D
+								"110088", // !=
 								"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
 						})) //
 				.addTripSort(1, //
 						Arrays.asList(new String[] { //
 						"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-								"109925", // == Woodgrove Centre Exchange Bay D
-								"109924", // !=
+								"110007", // !=
+								"109925", // <> == Woodgrove Centre Exchange Bay D
+								"110301", // !=
 								"110302", // !=
 								"110304", // ==
 								"110307", // !=
 								"110321", // !=
 								"110496", // !=
 								"110322", // ==
-								"110299", // Westbound Jensen Ave E at Craig
+								"110299", // ++ Westbound Jensen Ave E at Craig
+								"104049", // ==
+								"104075", // !=
+								"104175", // !=
+								"110345", // !=
+								"110346", // ==
 								"110358", // Southbound Jones at Fern Rd W
 						})) //
 				.compileBothTripSort());
