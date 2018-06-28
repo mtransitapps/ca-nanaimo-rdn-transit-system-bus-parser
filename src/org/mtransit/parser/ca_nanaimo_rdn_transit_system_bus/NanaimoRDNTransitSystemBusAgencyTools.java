@@ -68,7 +68,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return super.excludeCalendarDate(gCalendarDates);
 	}
 
-	private static final String INCLUDE_AGENCY_ID = "5"; // RDN Transit System only
+	private static final String INCLUDE_AGENCY_ID;
+	static {
+		INCLUDE_AGENCY_ID = "5"; // RDN Transit System only
+	}
 
 	@Override
 	public boolean excludeRoute(GRoute gRoute) {
@@ -344,7 +347,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								"110378", // !=
 								"104050", // ==
 								"110388", // ++ Eastbound Jensen Ave E at McCarter
-								"104160", // ==
+								"104045", // ==
+								"110414", // !=
+								"104160", // !=
 								"104169", // !=
 								"110399", // !=
 								"104173", // !=
@@ -414,6 +419,24 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								"104141", // Westbound Island Hwy W at 2711 Blk
 						})) //
 				.compileBothTripSort());
+		map2.put(99L, new RouteTripSpec(99L, //
+				INBOUND, MTrip.HEADSIGN_TYPE_STRING, "Qualicum Beach", //
+				OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, "Deep Bay") //
+				.addTripSort(INBOUND, //
+						Arrays.asList(new String[] { //
+						"104056", // == != Deep Bay Marina
+								"104055", // != <>
+								"104054", // == !=
+								"110358", // Jones at Fern Rd W (SB)
+						})) //
+				.addTripSort(OUTBOUND, //
+						Arrays.asList(new String[] { //
+						"110358", // Jones at Fern Rd W
+								"104164", // == !=
+								"104055", // != <>
+								"104056", // == != Deep Bay Marina
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -422,7 +445,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
+		String tripHeadsign = gTrip.getTripHeadsign();
+		mTrip.setHeadsignString(cleanTripHeadsign(tripHeadsign), gTrip.getDirectionId());
 	}
 
 	@Override
