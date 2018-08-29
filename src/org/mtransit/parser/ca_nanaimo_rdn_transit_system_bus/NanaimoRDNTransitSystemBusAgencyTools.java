@@ -29,6 +29,7 @@ import org.mtransit.parser.mt.data.MTripStop;
 
 // https://bctransit.com/*/footer/open-data
 // https://bctransit.com/servlet/bctransit/data/GTFS - Nanaimo
+// https://nanaimo.mapstrat.com/current/google_transit.zip
 public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
@@ -75,7 +76,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	private static final String INCLUDE_AGENCY_ID;
 	static {
-		INCLUDE_AGENCY_ID = "5"; // RDN Transit System only
+		INCLUDE_AGENCY_ID = "1"; // RDN Transit System only
 	}
 
 	@Override
@@ -197,12 +198,9 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final String VI_UNIVERSITY_SHORT = "VIU";
 	private static final String WOODGROVE = "Woodgrove";
 	private static final String BEACH = "Beach";
-	private static final String QUALICUM_BEACH = "Qualicum " + BEACH;
 	private static final String WESTWOOD = "Westwood";
 
 	// TRIP DIRECTION ID USED BY REAL-TIME API
-	private static final int INBOUND = 0;
-	private static final int OUTBOUND = 1;
 	private static final int CLOCKWISE_0 = 0;
 	private static final int CLOCKWISE_1 = 1;
 	private static final int COUNTERCLOCKWISE_0 = 0;
@@ -213,41 +211,25 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(1L, new RouteTripSpec(1L, //
-				INBOUND, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
-				OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, COUNTRY_CLUB) //
-				.addTripSort(INBOUND, //
-						Arrays.asList(new String[] { //
-						"110512", // Country Club Exchange Bay E
-								"110211", // ++
-								"110509", // Prideaux Street Exchange Bay E
-						})) //
-				.addTripSort(OUTBOUND, //
-						Arrays.asList(new String[] { //
-						"110509", // Prideaux Street Exchange Bay E
-								"109787", // ++
-								"110512", // Country Club Exchange Bay E
-						})) //
-				.compileBothTripSort());
 		map2.put(5L, new RouteTripSpec(5L, //
 				CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
 				CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTWOOD) //
 				.addTripSort(CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"109756", // Westbound Arbot at Westwood
-								"109762", // Eastbound Ashlee at Holland
-								"109763", // !=
-								"110520", // <> VIU Exchange Bay D
-								"110101", // !=
-								"110522", // Prideaux Street Exchange Bay B
+						"67", // "109756", // Westbound Arbot at Westwood
+								"73", // "109762", // Eastbound Ashlee at Holland
+								"74", // "109763", // !=
+								"81", // "110520", // <> VIU Exchange Bay D
+								"82", // "110101", // !=
+								"94", // "110522", // Prideaux Street Exchange Bay B
 						})) //
 				.addTripSort(CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"110522", // Prideaux Street Exchange Bay B
-								"110100", // !=
-								"110520", // <> VIU Exchange Bay D
-								"110072", // !=
-								"109756", // Westbound Arbot at Westwood
+						"94", // "110522", // Prideaux Street Exchange Bay B
+								"108", // "110100", // !=
+								"81", // "110520", // <> VIU Exchange Bay D
+								"109", // "110072", // !=
+								"67", // "109756", // Westbound Arbot at Westwood
 						})) //
 				.compileBothTripSort());
 		map2.put(7L, new RouteTripSpec(7L, //
@@ -255,36 +237,36 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, CINNABAR_CEDAR) //
 				.addTripSort(COUNTERCLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"110166", // <> #CINNABAR <=
-								"110167", // ++ #CINNABAR
-								"110176", // ++ #CINNABAR
-								"110206", // == #CINNABAR
-								"110191", // <> #CEDAR <=
-								"110192", // ++ #CEDAR
-								"110204", // ++ #CEDAR
-								"110205", // == #CEDAR
-								"110157", // xx
-								"110158", // xx Westbound 40 block 11th St
-								"110472", // ==
-								"109971", // Prideaux Street Exchange Bay G
+						"167", // "110166", // <> #CINNABAR <=
+								"168", // "110167", // ++ #CINNABAR
+								"177", // "110176", // ++ #CINNABAR
+								"178", // "110206", // == #CINNABAR
+								"193", // "110191", // <> #CEDAR <=
+								"194", // "110192", // ++ #CEDAR
+								"206", // "110204", // ++ #CEDAR
+								"207", // "110205", // == #CEDAR
+								"208", // "110157", // xx
+								"159", // "110158", // xx Westbound 40 block 11th St
+								"209", // "110472", // ==
+								"219", // "109971", // Prideaux Street Exchange Bay G
 						})) //
 				.addTripSort(COUNTERCLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"109971", // Prideaux Street Exchange Bay G
-								"110156", // ==
-								"110157", // xx
-								"110158", // xx Westbound 40 block 11th St
-								"110159", // == #CINNABAR
-								"110160", // ++ #CINNABAR
-								"110165", // ++ #CINNABAR
-								"110166", // <> #CINNABAR => DOWNTOWN
-								"110167", // ++ #CINNABAR
-								"110176", // ++ #CINNABAR
-								"110206", // == #CINNABAR
-								"110177", // != #CEDAR
-								"110178", // ++ #CEDAR
-								"110190", // ++ #CEDAR
-								"110191", // <> #CEDAR => DOWNTOWN
+						"219", // "109971", // Prideaux Street Exchange Bay G
+								"231", // "110156", // ==
+								"208", // "110157", // xx
+								"159", // "110158", // xx Westbound 40 block 11th St
+								"160", // "110159", // == #CINNABAR
+								"161", // "110160", // ++ #CINNABAR
+								"166", // "110165", // ++ #CINNABAR
+								"167", // "110166", // <> #CINNABAR => DOWNTOWN
+								"168", // "110167", // ++ #CINNABAR
+								"177", // "110176", // ++ #CINNABAR
+								"178", // "110206", // == #CINNABAR
+								"179", // "110177", // != #CEDAR
+								"180", // "110178", // ++ #CEDAR
+								"192", // "110190", // ++ #CEDAR
+								"193", // "110191", // <> #CEDAR => DOWNTOWN
 						})) //
 				.compileBothTripSort());
 		map2.put(11L, new RouteTripSpec(11L, //
@@ -292,20 +274,20 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"109925", // Woodgrove Centre Exchange Bay D
-								"110220", // ++
-								"110226", // Eastwind at Northwind
+						"232", // "109925", // Woodgrove Centre Exchange Bay D
+								"238", // "110220", // ++
+								"243", // "110226", // Eastwind at Northwind
 						})) //
 				.addTripSort(CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"110226", // Eastwind at Northwind
-								"109829", // == Dover at Applecross
-								"109830", // != Uplands at McRobb
-								"109831", // != Nanaimo Seniors Village
-								"109929", // != Dover at Uplands
-								"109921", // != Dover Bay High School
-								"109922", // == Hammond Bay at Uplands
-								"109925", // Woodgrove Centre Exchange Bay D
+						"243", // "110226", // Eastwind at Northwind
+								"258", // "109829", // == Dover at Applecross
+								"259", // "109830", // != Uplands at McRobb
+								"260", // "109831", // != Nanaimo Seniors Village
+								"263", // "109929", // != Dover at Uplands
+								"268", // "109921", // != Dover Bay High School
+								"261", // "109922", // == Hammond Bay at Uplands
+								"232", // "109925", // Woodgrove Centre Exchange Bay D
 						})) //
 				.compileBothTripSort());
 		map2.put(25L, new RouteTripSpec(25L, //
@@ -313,16 +295,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "BC Ferries") //
 				.addTripSort(CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-								"110519", // VIU Exchange Bay B VIU
-								"109925", // Woodgrove Centre Exchange Bay D
+						"333", // "109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+								"396", // "110519", // VIU Exchange Bay B VIU
+								"232", // "109925", // Woodgrove Centre Exchange Bay D
 						})) //
 				.addTripSort(CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"109925", // Woodgrove Centre Exchange Bay D
-								"110516", // ++
-								"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-
+						"232", // "109925", // Woodgrove Centre Exchange Bay D
+								"322", // "110516", // ++
+								"333", // "109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
 						})) //
 				.compileBothTripSort());
 		map2.put(88L, new RouteTripSpec(88L, //
@@ -330,59 +311,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				OUTBOUND_1, MTrip.HEADSIGN_TYPE_STRING, "Wembley Mall") //
 				.addTripSort(OUTBOUND_0, //
 						Arrays.asList(new String[] { //
-						"110299", // Westbound Jensen Ave E at Craig
-								"110441", // ++
-								"104058", // Southbound Island highway W at Wembley Mall
+						"555", // "110299", // Westbound Jensen Ave E at Craig
+								"569", // "110441", // ++
+								"582", // "104058", // Southbound Island highway W at Wembley Mall
 						})) //
 				.addTripSort(OUTBOUND_1, //
 						Arrays.asList(new String[] { //
-						"104058", // Southbound Island highway W at Wembley Mall
-								"110280", // ++
-								"110299", // Westbound Jensen Ave E at Craig
-						})) //
-				.compileBothTripSort());
-		map2.put(91L, new RouteTripSpec(91L, //
-				INBOUND, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, //
-				OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, QUALICUM_BEACH) //
-				.addTripSort(INBOUND, //
-						Arrays.asList(new String[] { //
-						"110358", // Southbound Jones at Fern Rd W
-								"110369", // ==
-								"110370", // !=
-								"110378", // !=
-								"104050", // ==
-								"110388", // ++ Eastbound Jensen Ave E at McCarter
-								"104045", // ==
-								"110414", // !=
-								"104160", // !=
-								"104169", // !=
-								"110399", // !=
-								"104173", // !=
-								"110415", // ==
-								"110300", // !=
-								"109925", // <> Woodgrove Centre Exchange Bay D
-								"110088", // !=
-								"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-						})) //
-				.addTripSort(OUTBOUND, //
-						Arrays.asList(new String[] { //
-						"109880", // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-								"110007", // !=
-								"109925", // <> == Woodgrove Centre Exchange Bay D
-								"110301", // !=
-								"110302", // !=
-								"110304", // ==
-								"110307", // !=
-								"110321", // !=
-								"110496", // !=
-								"110322", // ==
-								"110299", // ++ Westbound Jensen Ave E at Craig
-								"104049", // ==
-								"104075", // !=
-								"104175", // !=
-								"110345", // !=
-								"110346", // ==
-								"110358", // Southbound Jones at Fern Rd W
+						"582", // "104058", // Southbound Island highway W at Wembley Mall
+								"602", // "110280", // ++
+								"555", // "110299", // Westbound Jensen Ave E at Craig
 						})) //
 				.compileBothTripSort());
 		map2.put(97L, new RouteTripSpec(97L, //
@@ -390,18 +327,18 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "East") // Eaglecrest") //
 				.addTripSort(COUNTERCLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"110376 ", // Eastbound Sunrise at Drew
-								"104080", // Westbound Pintail at Eaglecrest Dr
-								"104113", // Southbound Eaglecrest farside Mallard
-								"104122", // ++
-								"110358", // Southbound Jones at Fern Rd W
+						"690", // "110376 ", // Eastbound Sunrise at Drew
+								"753", // "104080", // Westbound Pintail at Eaglecrest Dr
+								"754", // "104113", // Southbound Eaglecrest farside Mallard
+								"761", // "104122", // ++
+								"671", // "110358", // Southbound Jones at Fern Rd W
 						})) //
 				.addTripSort(COUNTERCLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"110358", // Southbound Jones at Fern Rd W
-								"104060", // ++
-								"104061", // ++
-								"110376", // Eastbound Sunrise at Drew
+						"671", // "110358", // Southbound Jones at Fern Rd W
+								"740", // "104060", // ++
+								"741", // "104061", // ++
+								"690", // "110376", // Eastbound Sunrise at Drew
 						})) //
 				.compileBothTripSort());
 		map2.put(98L, new RouteTripSpec(98L, //
@@ -409,37 +346,19 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Island Hwy W") // "Qualicum Beach") //
 				.addTripSort(CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						"104141", // Westbound Island Hwy W at 2711 Blk
-								"104146", // Westbound Island Hwy W ACR Beach Dr
-								"104147", // == Southbound Garrett at Parkridge
-								"104138", // != Southbound Garrett at Garrett Turn-About
-								"104149", // == Eastbound Canyon at 727
-								"110358", // Southbound Jones at Fern Rd W
+						"778", // "104141", // Westbound Island Hwy W at 2711 Blk
+								"783", // "104146", // Westbound Island Hwy W ACR Beach Dr
+								"784", // "104147", // == Southbound Garrett at Parkridge
+								"793", // "104138", // != Southbound Garrett at Garrett Turn-About
+								"785", // "104149", // == Eastbound Canyon at 727
+								"671", // "110358", // Southbound Jones at Fern Rd W
 						})) //
 				.addTripSort(CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						"110358", // Southbound Jones at Fern Rd W
-								"104134", // ++
-								"104140", // Eastbound Crescent Rd W at Memorial
-								"104141", // Westbound Island Hwy W at 2711 Blk
-						})) //
-				.compileBothTripSort());
-		map2.put(99L, new RouteTripSpec(99L, //
-				INBOUND, MTrip.HEADSIGN_TYPE_STRING, "Qualicum Beach", //
-				OUTBOUND, MTrip.HEADSIGN_TYPE_STRING, "Deep Bay") //
-				.addTripSort(INBOUND, //
-						Arrays.asList(new String[] { //
-						"104056", // == != Deep Bay Marina
-								"104055", // != <>
-								"104054", // == !=
-								"110358", // Jones at Fern Rd W (SB)
-						})) //
-				.addTripSort(OUTBOUND, //
-						Arrays.asList(new String[] { //
-						"110358", // Jones at Fern Rd W
-								"104164", // == !=
-								"104055", // != <>
-								"104056", // == != Deep Bay Marina
+						"671", // "110358", // Southbound Jones at Fern Rd W
+								"771", // "104134", // ++
+								"777", // "104140", // Eastbound Crescent Rd W at Memorial
+								"778", // "104141", // Westbound Island Hwy W at 2711 Blk
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -450,8 +369,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		String tripHeadsign = gTrip.getTripHeadsign();
-		mTrip.setHeadsignString(cleanTripHeadsign(tripHeadsign), gTrip.getDirectionId());
+		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
 	@Override
@@ -500,6 +418,14 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			} else if (Arrays.asList( //
 					COUNTRY_CLUB, // same
+					WOODGROVE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 91L) {
+			if (Arrays.asList( //
+					"BC Ferries", //
 					WOODGROVE //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
