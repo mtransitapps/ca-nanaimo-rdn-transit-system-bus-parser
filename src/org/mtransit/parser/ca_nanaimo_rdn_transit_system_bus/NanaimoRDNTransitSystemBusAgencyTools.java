@@ -226,43 +226,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.ALL_STOPS.get("109756"), Stops2.ALL_STOPS2.get("109756"), // Westbound Arbot at Westwood
 						})) //
 				.compileBothTripSort());
-		map2.put(7L, new RouteTripSpec(7L, //
-				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
-				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, CINNABAR_CEDAR) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110166"), Stops2.ALL_STOPS2.get("110166"), // <> #CINNABAR <=
-								Stops.ALL_STOPS.get("110167"), Stops2.ALL_STOPS2.get("110167"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110176"), Stops2.ALL_STOPS2.get("110176"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110206"), Stops2.ALL_STOPS2.get("110206"), // == #CINNABAR
-								Stops.ALL_STOPS.get("110191"), Stops2.ALL_STOPS2.get("110191"), // <> #CEDAR <=
-								Stops.ALL_STOPS.get("110192"), Stops2.ALL_STOPS2.get("110192"), // ++ #CEDAR
-								Stops.ALL_STOPS.get("110204"), Stops2.ALL_STOPS2.get("110204"), // ++ #CEDAR
-								Stops.ALL_STOPS.get("110205"), Stops2.ALL_STOPS2.get("110205"), // == #CEDAR
-								Stops.ALL_STOPS.get("110157"), Stops2.ALL_STOPS2.get("110157"), // xx
-								Stops.ALL_STOPS.get("110158"), Stops2.ALL_STOPS2.get("110158"), // xx Westbound 40 block 11th St
-								Stops.ALL_STOPS.get("110472"), Stops2.ALL_STOPS2.get("110472"), // ==
-								Stops.ALL_STOPS.get("109971"), Stops2.ALL_STOPS2.get("109971"), // Prideaux Street Exchange Bay G
-						})) //
-				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109971"), Stops2.ALL_STOPS2.get("109971"), // Prideaux Street Exchange Bay G
-								Stops.ALL_STOPS.get("110156"), Stops2.ALL_STOPS2.get("110156"), // ==
-								Stops.ALL_STOPS.get("110157"), Stops2.ALL_STOPS2.get("110157"), // xx
-								Stops.ALL_STOPS.get("110158"), Stops2.ALL_STOPS2.get("110158"), // xx Westbound 40 block 11th St
-								Stops.ALL_STOPS.get("110159"), Stops2.ALL_STOPS2.get("110159"), // == #CINNABAR
-								Stops.ALL_STOPS.get("110160"), Stops2.ALL_STOPS2.get("110160"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110165"), Stops2.ALL_STOPS2.get("110165"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110166"), Stops2.ALL_STOPS2.get("110166"), // <> #CINNABAR => DOWNTOWN
-								Stops.ALL_STOPS.get("110167"), Stops2.ALL_STOPS2.get("110167"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110176"), Stops2.ALL_STOPS2.get("110176"), // ++ #CINNABAR
-								Stops.ALL_STOPS.get("110206"), Stops2.ALL_STOPS2.get("110206"), // == #CINNABAR
-								Stops.ALL_STOPS.get("110177"), Stops2.ALL_STOPS2.get("110177"), // != #CEDAR
-								Stops.ALL_STOPS.get("110178"), Stops2.ALL_STOPS2.get("110178"), // ++ #CEDAR
-								Stops.ALL_STOPS.get("110190"), Stops2.ALL_STOPS2.get("110190"), // ++ #CEDAR
-								Stops.ALL_STOPS.get("110191"), Stops2.ALL_STOPS2.get("110191"), // <> #CEDAR => DOWNTOWN
-						})) //
-				.compileBothTripSort());
 		map2.put(11L, new RouteTripSpec(11L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
@@ -399,11 +362,19 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mTrip.getRouteId() == 15L) {
 			if (Arrays.asList( //
-					VI_UNIVERSITY_SHORT, //
+					"A " + VI_UNIVERSITY_SHORT, //
 					VI_UNIVERSITY_SHORT + " Only", //
-					VI_UNIVERSITY_SHORT + "-" //
-			).containsAll(headsignsValues)) {
+					VI_UNIVERSITY_SHORT + "-", //
+					VI_UNIVERSITY_SHORT //
+					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(VI_UNIVERSITY_SHORT, mTrip.getHeadsignId()); //
+				return true;
+			}
+			if (Arrays.asList( //
+					"A " + WOODGROVE, //
+					WOODGROVE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 20L) {
