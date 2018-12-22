@@ -252,15 +252,21 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "BC Ferries") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
-								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // VIU Exchange Bay B VIU
+						Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // == Departure Bay Ferry
+								Stops.ALL_STOPS.get("109964"), Stops2.ALL_STOPS2.get("109964"), // != Stewart at Maple
+								Stops.ALL_STOPS.get("104170"), Stops2.ALL_STOPS2.get("104170"), // Prideaux Street Exchange Bay H
+								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // ++ VIU Exchange Bay B VIU
+								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // != Metral 6300 block
+								Stops.ALL_STOPS.get("109881"), Stops2.ALL_STOPS2.get("109881"), // != Brechin at Beach
+								Stops.ALL_STOPS.get("110215"), Stops2.ALL_STOPS2.get("110215"), // != Norwell at Victoria
+								Stops.ALL_STOPS.get("110006"), Stops2.ALL_STOPS2.get("110006"), // == Metral at Enterprise
 								Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
-								Stops.ALL_STOPS.get("110516"), Stops2.ALL_STOPS2.get("110516"), // ++
-								Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // Northbound Trans-Canada at Horseshoe Bay-Departure Bay Ferry
+								Stops.ALL_STOPS.get("110516"), Stops2.ALL_STOPS2.get("110516"), // ++ Country Club Exchange Bay A
+								Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // Departure Bay Ferry
 						})) //
 				.compileBothTripSort());
 		map2.put(88L, new RouteTripSpec(88L, //
@@ -379,13 +385,21 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mTrip.getRouteId() == 20L) {
 			if (Arrays.asList( //
-					COUNTRY_CLUB, // same
+					COUNTRY_CLUB, // <>
 					DOWNTOWN //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
 				return true;
 			} else if (Arrays.asList( //
-					COUNTRY_CLUB, // same
+					COUNTRY_CLUB, // <>
+					WOODGROVE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 40L) {
+			if (Arrays.asList( //
+					"School Special", //
 					WOODGROVE //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
@@ -397,6 +411,14 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 					WOODGROVE //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 99L) {
+			if (Arrays.asList( //
+					"Duke Pt", //
+					"Qualicum Beach" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Qualicum Beach", mTrip.getHeadsignId()); //
 				return true;
 			}
 		}
