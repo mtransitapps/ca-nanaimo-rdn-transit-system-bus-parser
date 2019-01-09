@@ -253,12 +253,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // == Departure Bay Ferry
-								Stops.ALL_STOPS.get("109964"), Stops2.ALL_STOPS2.get("109964"), // != Stewart at Maple
+								Stops.ALL_STOPS.get("109964"), Stops2.ALL_STOPS2.get("109964"), // !== Stewart at Maple
 								Stops.ALL_STOPS.get("104170"), Stops2.ALL_STOPS2.get("104170"), // Prideaux Street Exchange Bay H
+								Stops.ALL_STOPS.get("110063"), Stops2.ALL_STOPS2.get("110063"), // != Fitzwilliam at MacHleary
 								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // ++ VIU Exchange Bay B VIU
-								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // != Metral 6300 block
-								Stops.ALL_STOPS.get("109881"), Stops2.ALL_STOPS2.get("109881"), // != Brechin at Beach
-								Stops.ALL_STOPS.get("110215"), Stops2.ALL_STOPS2.get("110215"), // != Norwell at Victoria
+								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // !== Metral 6300 block
+								Stops.ALL_STOPS.get("109881"), Stops2.ALL_STOPS2.get("109881"), // !== Brechin at Beach
+								Stops.ALL_STOPS.get("110215"), Stops2.ALL_STOPS2.get("110215"), // !== Norwell at Victoria
 								Stops.ALL_STOPS.get("110006"), Stops2.ALL_STOPS2.get("110006"), // == Metral at Enterprise
 								Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
 						})) //
