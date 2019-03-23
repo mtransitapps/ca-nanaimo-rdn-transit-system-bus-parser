@@ -200,32 +200,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final String WOODGROVE = "Woodgrove";
 	private static final String BEACH = "Beach";
 	private static final String WESTWOOD = "Westwood";
+	private static final String BC_FERRIES = "BC Ferries";
+	private static final String LANTZVILLE = "Lantzville";
 
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(5L, new RouteTripSpec(5L, //
-				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, DOWNTOWN, //
-				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WESTWOOD) //
-				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109756"), Stops2.ALL_STOPS2.get("109756"), // Westbound Arbot at Westwood
-								Stops.ALL_STOPS.get("109762"), Stops2.ALL_STOPS2.get("109762"), // Eastbound Ashlee at Holland
-								Stops.ALL_STOPS.get("109763"), Stops2.ALL_STOPS2.get("109763"), // !=
-								Stops.ALL_STOPS.get("110520"), Stops2.ALL_STOPS2.get("110520"), // <> VIU Exchange Bay D
-								Stops.ALL_STOPS.get("110101"), Stops2.ALL_STOPS2.get("110101"), // !=
-								Stops.ALL_STOPS.get("110522"), Stops2.ALL_STOPS2.get("110522"), // Prideaux Street Exchange Bay B
-						})) //
-				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110522"), Stops2.ALL_STOPS2.get("110522"), // Prideaux Street Exchange Bay B
-								Stops.ALL_STOPS.get("110100"), Stops2.ALL_STOPS2.get("110100"), // !=
-								Stops.ALL_STOPS.get("110520"), Stops2.ALL_STOPS2.get("110520"), // <> VIU Exchange Bay D
-								Stops.ALL_STOPS.get("110072"), Stops2.ALL_STOPS2.get("110072"), // !=
-								Stops.ALL_STOPS.get("109756"), Stops2.ALL_STOPS2.get("109756"), // Westbound Arbot at Westwood
-						})) //
-				.compileBothTripSort());
 		map2.put(11L, new RouteTripSpec(11L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
@@ -249,13 +230,17 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				.compileBothTripSort());
 		map2.put(25L, new RouteTripSpec(25L, //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
-				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "BC Ferries") //
+				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
 						Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // == Departure Bay Ferry
 								Stops.ALL_STOPS.get("109964"), Stops2.ALL_STOPS2.get("109964"), // !== Stewart at Maple
-								Stops.ALL_STOPS.get("104170"), Stops2.ALL_STOPS2.get("104170"), // Prideaux Street Exchange Bay H
-								Stops.ALL_STOPS.get("110063"), Stops2.ALL_STOPS2.get("110063"), // != Fitzwilliam at MacHleary
+								Stops.ALL_STOPS.get("109872"), Stops2.ALL_STOPS2.get("109872"), // ========== Front at Gabriola Ferry Term
+								Stops.ALL_STOPS.get("109873"), Stops2.ALL_STOPS2.get("109873"), "99", "119", // !== Front at Esplanade
+								Stops.ALL_STOPS.get("109874"), Stops2.ALL_STOPS2.get("109874"), // xx Victoria at Albert
+								Stops.ALL_STOPS.get("109875"), Stops2.ALL_STOPS2.get("109875"), // xx Fitzwilliam at Wesley
+								Stops.ALL_STOPS.get("104170"), Stops2.ALL_STOPS2.get("104170"), // !== Prideaux Street Exchange Bay H
+								Stops.ALL_STOPS.get("110063"), Stops2.ALL_STOPS2.get("110063"), // ========== Fitzwilliam at MacHleary
 								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // ++ VIU Exchange Bay B VIU
 								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // !== Metral 6300 block
 								Stops.ALL_STOPS.get("109881"), Stops2.ALL_STOPS2.get("109881"), // !== Brechin at Beach
@@ -342,7 +327,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			return true;
 		}
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		if (mTrip.getRouteId() == 6L) {
+		if (mTrip.getRouteId() == 5L) {
+			if (Arrays.asList( //
+					WESTWOOD, //
+					DOWNTOWN //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 6L) {
 			if (Arrays.asList( //
 					COUNTRY_CLUB, //
 					DOWNTOWN //
@@ -361,10 +354,10 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mTrip.getRouteId() == 11L) {
 			if (Arrays.asList( //
-					"BC Ferries", //
-					"Lantzville" //
-			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("Lantzville", mTrip.getHeadsignId()); //
+					BC_FERRIES, //
+					LANTZVILLE //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(LANTZVILLE, mTrip.getHeadsignId()); //
 				return true;
 			}
 		} else if (mTrip.getRouteId() == 15L) {
@@ -398,6 +391,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
+		} else if (mTrip.getRouteId() == 25L) {
+			if (Arrays.asList( //
+					WOODGROVE, //
+					BC_FERRIES).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(BC_FERRIES, mTrip.getHeadsignId()); //
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 40L) {
 			if (Arrays.asList( //
 					"School Special", //
@@ -408,7 +408,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			}
 		} else if (mTrip.getRouteId() == 91L) {
 			if (Arrays.asList( //
-					"BC Ferries", //
+					BC_FERRIES, //
 					WOODGROVE //
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
