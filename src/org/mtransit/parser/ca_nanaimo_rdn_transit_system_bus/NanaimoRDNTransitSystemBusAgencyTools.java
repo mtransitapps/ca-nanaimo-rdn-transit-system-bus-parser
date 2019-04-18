@@ -239,7 +239,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.ALL_STOPS.get("109873"), Stops2.ALL_STOPS2.get("109873"), "99", "119", // !== Front at Esplanade
 								Stops.ALL_STOPS.get("109874"), Stops2.ALL_STOPS2.get("109874"), // xx Victoria at Albert
 								Stops.ALL_STOPS.get("109875"), Stops2.ALL_STOPS2.get("109875"), // xx Fitzwilliam at Wesley
-								Stops.ALL_STOPS.get("104170"), Stops2.ALL_STOPS2.get("104170"), // !== Prideaux Street Exchange Bay H
 								Stops.ALL_STOPS.get("110063"), Stops2.ALL_STOPS2.get("110063"), // ========== Fitzwilliam at MacHleary
 								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // ++ VIU Exchange Bay B VIU
 								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // !== Metral 6300 block
