@@ -408,6 +408,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
+			if (Arrays.asList( //
+					VI_UNIVERSITY_SHORT + " Only", //
+					DOWNTOWN //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
+				return true;
+			}
 		} else if (mTrip.getRouteId() == 91L) {
 			if (Arrays.asList( //
 					BC_FERRIES, //
