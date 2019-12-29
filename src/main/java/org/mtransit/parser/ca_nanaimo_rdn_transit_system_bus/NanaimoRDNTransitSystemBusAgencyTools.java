@@ -215,20 +215,20 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
-								Stops.ALL_STOPS.get("110220"), Stops2.ALL_STOPS2.get("110220"), // ++
-								Stops.ALL_STOPS.get("110226"), Stops2.ALL_STOPS2.get("110226"), // Eastwind at Northwind
+						Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
+								Stops.getALL_STOPS().get("110220"), // ++
+								Stops.getALL_STOPS().get("110226"), // Eastwind at Northwind
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110226"), Stops2.ALL_STOPS2.get("110226"), // Eastwind at Northwind
-								Stops.ALL_STOPS.get("109829"), Stops2.ALL_STOPS2.get("109829"), // == Dover at Applecross
-								Stops.ALL_STOPS.get("109830"), Stops2.ALL_STOPS2.get("109830"), // != Uplands at McRobb
-								Stops.ALL_STOPS.get("109831"), Stops2.ALL_STOPS2.get("109831"), // != Nanaimo Seniors Village
-								Stops.ALL_STOPS.get("109929"), Stops2.ALL_STOPS2.get("109929"), // != Dover at Uplands
-								Stops.ALL_STOPS.get("109921"), Stops2.ALL_STOPS2.get("109921"), // != Dover Bay High School
-								Stops.ALL_STOPS.get("109922"), Stops2.ALL_STOPS2.get("109922"), // == Hammond Bay at Uplands
-								Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
+						Stops.getALL_STOPS().get("110226"), // Eastwind at Northwind
+								Stops.getALL_STOPS().get("109829"), // == Dover at Applecross
+								Stops.getALL_STOPS().get("109830"), // != Uplands at McRobb
+								Stops.getALL_STOPS().get("109831"), // != Nanaimo Seniors Village
+								Stops.getALL_STOPS().get("109929"), // != Dover at Uplands
+								Stops.getALL_STOPS().get("109921"), // != Dover Bay High School
+								Stops.getALL_STOPS().get("109922"), // == Hammond Bay at Uplands
+								Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
 						})) //
 				.compileBothTripSort());
 		map2.put(25L, new RouteTripSpec(25L, //
@@ -236,25 +236,25 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // == Departure Bay Ferry
-								Stops.ALL_STOPS.get("109964"), Stops2.ALL_STOPS2.get("109964"), // !== Stewart at Maple
-								Stops.ALL_STOPS.get("109872"), Stops2.ALL_STOPS2.get("109872"), // ========== Front at Gabriola Ferry Term
-								Stops.ALL_STOPS.get("109873"), Stops2.ALL_STOPS2.get("109873"), "99", "119", // !== Front at Esplanade
-								Stops.ALL_STOPS.get("109874"), Stops2.ALL_STOPS2.get("109874"), // xx Victoria at Albert
-								Stops.ALL_STOPS.get("109875"), Stops2.ALL_STOPS2.get("109875"), // xx Fitzwilliam at Wesley
-								Stops.ALL_STOPS.get("110063"), Stops2.ALL_STOPS2.get("110063"), // ========== Fitzwilliam at MacHleary
-								Stops.ALL_STOPS.get("110519"), Stops2.ALL_STOPS2.get("110519"), // ++ VIU Exchange Bay B VIU
-								Stops.ALL_STOPS.get("110005"), Stops2.ALL_STOPS2.get("110005"), // !== Metral 6300 block
-								Stops.ALL_STOPS.get("109881"), Stops2.ALL_STOPS2.get("109881"), // !== Brechin at Beach
-								Stops.ALL_STOPS.get("110215"), Stops2.ALL_STOPS2.get("110215"), // !== Norwell at Victoria
-								Stops.ALL_STOPS.get("110006"), Stops2.ALL_STOPS2.get("110006"), // == Metral at Enterprise
-								Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
+						Stops.getALL_STOPS().get("109880"), // == Departure Bay Ferry
+								Stops.getALL_STOPS().get("109964"), // !== Stewart at Maple
+								Stops.getALL_STOPS().get("109872"), // ========== Front at Gabriola Ferry Term
+								Stops.getALL_STOPS().get("109873"), // !== Front at Esplanade
+								Stops.getALL_STOPS().get("109874"), // xx Victoria at Albert
+								Stops.getALL_STOPS().get("109875"), // xx Fitzwilliam at Wesley
+								Stops.getALL_STOPS().get("110063"), // ========== Fitzwilliam at MacHleary
+								Stops.getALL_STOPS().get("110519"), // ++ VIU Exchange Bay B VIU
+								Stops.getALL_STOPS().get("110005"), // !== Metral 6300 block
+								Stops.getALL_STOPS().get("109881"), // !== Brechin at Beach
+								Stops.getALL_STOPS().get("110215"), // !== Norwell at Victoria
+								Stops.getALL_STOPS().get("110006"), // == Metral at Enterprise
+								Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("109925"), Stops2.ALL_STOPS2.get("109925"), // Woodgrove Centre Exchange Bay D
-								Stops.ALL_STOPS.get("110516"), Stops2.ALL_STOPS2.get("110516"), // ++ Country Club Exchange Bay A
-								Stops.ALL_STOPS.get("109880"), Stops2.ALL_STOPS2.get("109880"), // Departure Bay Ferry
+						Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
+								Stops.getALL_STOPS().get("110516"), // ++ Country Club Exchange Bay A
+								Stops.getALL_STOPS().get("109880"), // Departure Bay Ferry
 						})) //
 				.compileBothTripSort());
 		map2.put(88L, new RouteTripSpec(88L, //
@@ -262,15 +262,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.OUTBOUND_1, MTrip.HEADSIGN_TYPE_STRING, "Wembley Mall") //
 				.addTripSort(StrategicMappingCommons.OUTBOUND_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110299"), Stops2.ALL_STOPS2.get("110299"), // Jensen Ave E at Craig
-								Stops.ALL_STOPS.get("110441"), Stops2.ALL_STOPS2.get("110441"), // Pym St N at Jenkins
-								Stops.ALL_STOPS.get("104168"), Stops2.ALL_STOPS2.get("104168"), // Wembley Mall AT Wembley Rd
+						Stops.getALL_STOPS().get("110299"), // Jensen Ave E at Craig
+								Stops.getALL_STOPS().get("110441"), // Pym St N at Jenkins
+								Stops.getALL_STOPS().get("104168"), // Wembley Mall AT Wembley Rd
 						})) //
 				.addTripSort(StrategicMappingCommons.OUTBOUND_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("104168"), Stops2.ALL_STOPS2.get("104168"), // Wembley Mall AT Wembley Rd
-								Stops.ALL_STOPS.get("110280"), Stops2.ALL_STOPS2.get("110280"), // Finholm St S at Morison
-								Stops.ALL_STOPS.get("110299"), Stops2.ALL_STOPS2.get("110299"), // Jensen Ave E at Craig
+						Stops.getALL_STOPS().get("104168"), // Wembley Mall AT Wembley Rd
+								Stops.getALL_STOPS().get("110280"), // Finholm St S at Morison
+								Stops.getALL_STOPS().get("110299"), // Jensen Ave E at Craig
 						})) //
 				.compileBothTripSort());
 		map2.put(97L, new RouteTripSpec(97L, //
@@ -278,18 +278,18 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "East") // Eaglecrest") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110376"), Stops2.ALL_STOPS2.get("110376"), // Eastbound Sunrise at Drew
-								Stops.ALL_STOPS.get("104080"), Stops2.ALL_STOPS2.get("104080"), // Westbound Pintail at Eaglecrest Dr
-								Stops.ALL_STOPS.get("104113"), Stops2.ALL_STOPS2.get("104113"), // Southbound Eaglecrest farside Mallard
-								Stops.ALL_STOPS.get("104122"), Stops2.ALL_STOPS2.get("104122"), // ++
-								Stops.ALL_STOPS.get("110358"), Stops2.ALL_STOPS2.get("110358"), // Southbound Jones at Fern Rd W
+						Stops.getALL_STOPS().get("110376"), // Eastbound Sunrise at Drew
+								Stops.getALL_STOPS().get("104080"), // Westbound Pintail at Eaglecrest Dr
+								Stops.getALL_STOPS().get("104113"), // Southbound Eaglecrest farside Mallard
+								Stops.getALL_STOPS().get("104122"), // ++
+								Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
 						})) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110358"), Stops2.ALL_STOPS2.get("110358"), // Southbound Jones at Fern Rd W
-								Stops.ALL_STOPS.get("104060"), Stops2.ALL_STOPS2.get("104060"), // ++
-								Stops.ALL_STOPS.get("104061"), Stops2.ALL_STOPS2.get("104061"), // ++
-								Stops.ALL_STOPS.get("110376"), Stops2.ALL_STOPS2.get("110376"), // Eastbound Sunrise at Drew
+						Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
+								Stops.getALL_STOPS().get("104060"), // ++
+								Stops.getALL_STOPS().get("104061"), // ++
+								Stops.getALL_STOPS().get("110376"), // Eastbound Sunrise at Drew
 						})) //
 				.compileBothTripSort());
 		map2.put(98L, new RouteTripSpec(98L, //
@@ -297,19 +297,19 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Island Hwy W") // "Qualicum Beach") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("104141"), Stops2.ALL_STOPS2.get("104141"), // Westbound Island Hwy W at 2711 Blk
-								Stops.ALL_STOPS.get("104146"), Stops2.ALL_STOPS2.get("104146"), // Westbound Island Hwy W ACR Beach Dr
-								Stops.ALL_STOPS.get("104147"), Stops2.ALL_STOPS2.get("104147"), // == Southbound Garrett at Parkridge
-								Stops.ALL_STOPS.get("104138"), Stops2.ALL_STOPS2.get("104138"), // != Southbound Garrett at Garrett Turn-About
-								Stops.ALL_STOPS.get("104149"), Stops2.ALL_STOPS2.get("104149"), // == Eastbound Canyon at 727
-								Stops.ALL_STOPS.get("110358"), Stops2.ALL_STOPS2.get("110358"), // Southbound Jones at Fern Rd W
+						Stops.getALL_STOPS().get("104141"), // Westbound Island Hwy W at 2711 Blk
+								Stops.getALL_STOPS().get("104146"), // Westbound Island Hwy W ACR Beach Dr
+								Stops.getALL_STOPS().get("104147"), // == Southbound Garrett at Parkridge
+								Stops.getALL_STOPS().get("104138"), // != Southbound Garrett at Garrett Turn-About
+								Stops.getALL_STOPS().get("104149"), // == Eastbound Canyon at 727
+								Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
 						})) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
 						Arrays.asList(new String[] { //
-						Stops.ALL_STOPS.get("110358"), Stops2.ALL_STOPS2.get("110358"), // Southbound Jones at Fern Rd W
-								Stops.ALL_STOPS.get("104134"), Stops2.ALL_STOPS2.get("104134"), // ++
-								Stops.ALL_STOPS.get("104140"), Stops2.ALL_STOPS2.get("104140"), // Eastbound Crescent Rd W at Memorial
-								Stops.ALL_STOPS.get("104141"), Stops2.ALL_STOPS2.get("104141"), // Westbound Island Hwy W at 2711 Blk
+						Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
+								Stops.getALL_STOPS().get("104134"), // ++
+								Stops.getALL_STOPS().get("104140"), // Eastbound Crescent Rd W at Memorial
+								Stops.getALL_STOPS().get("104141"), // Westbound Island Hwy W at 2711 Blk
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -382,11 +382,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		} else if (mTrip.getRouteId() == 20L) {
 			if (Arrays.asList( //
 					COUNTRY_CLUB, // <>
-					DOWNTOWN //
+					DOWNTOWN // <>
 					).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
 				return true;
-			} else if (Arrays.asList( //
+			}
+			if (Arrays.asList( //
+					DOWNTOWN, // <>
 					COUNTRY_CLUB, // <>
 					WOODGROVE //
 					).containsAll(headsignsValues)) {
