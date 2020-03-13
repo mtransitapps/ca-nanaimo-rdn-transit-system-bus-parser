@@ -216,14 +216,14 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
 								Stops.getALL_STOPS().get("110220"), // ++
-								Stops.getALL_STOPS().get("110226") // Eastwind at Northwind
+								Stops.getALL_STOPS().get("110226"), "255" // Eastwind at Northwind
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
-								Stops.getALL_STOPS().get("110226"), // Eastwind at Northwind
+						Arrays.asList( //
+								Stops.getALL_STOPS().get("110226"), "255", // Eastwind at Northwind
 								Stops.getALL_STOPS().get("109829"), // == Dover at Applecross
 								Stops.getALL_STOPS().get("109830"), // != Uplands at McRobb
 								Stops.getALL_STOPS().get("109831"), // != Nanaimo Seniors Village
