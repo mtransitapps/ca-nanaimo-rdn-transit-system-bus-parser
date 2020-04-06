@@ -104,8 +104,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public long getRouteId(GRoute gRoute) {
-		return Long.parseLong(gRoute.getRouteShortName()); // use route short name as route ID
+	public long getRouteId(GRoute gRoute) { // used by GTFS-RT
+		return super.getRouteId(gRoute);
 	}
 
 	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^- )", Pattern.CASE_INSENSITIVE);
@@ -212,7 +212,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
-		map2.put(11L, new RouteTripSpec(11L, //
+		map2.put(6L, new RouteTripSpec(6L, // 11 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -233,7 +233,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(25L, new RouteTripSpec(25L, //
+		map2.put(9L, new RouteTripSpec(9L, // 25 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -259,7 +259,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109880") // Departure Bay Ferry
 						)) //
 				.compileBothTripSort());
-		map2.put(88L, new RouteTripSpec(88L, //
+		map2.put(14L, new RouteTripSpec(14L, // 88 //
 				StrategicMappingCommons.OUTBOUND_0, MTrip.HEADSIGN_TYPE_STRING, "Parksville", //
 				StrategicMappingCommons.OUTBOUND_1, MTrip.HEADSIGN_TYPE_STRING, "Wembley Mall") //
 				.addTripSort(StrategicMappingCommons.OUTBOUND_0, //
@@ -275,7 +275,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("110299") // Jensen Ave E at Craig
 						)) //
 				.compileBothTripSort());
-		map2.put(97L, new RouteTripSpec(97L, //
+		map2.put(16L, new RouteTripSpec(16L, // 97 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", // "West", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "East") // Eaglecrest") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -294,7 +294,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("110376") // Eastbound Sunrise at Drew
 						)) //
 				.compileBothTripSort());
-		map2.put(98L, new RouteTripSpec(98L, //
+		map2.put(17L, new RouteTripSpec(17L, // 98 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Island Hwy W") // "Qualicum Beach") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -317,11 +317,15 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
+	private final HashMap<Long, Long> routeIdToShortName = new HashMap<>();
+
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
+		final long rsn = Long.parseLong(mRoute.getShortName());
+		this.routeIdToShortName.put(mRoute.getId(), rsn);
 		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
 	}
 
@@ -331,7 +335,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			return true;
 		}
 		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
-		if (mTrip.getRouteId() == 5L) {
+		final long rsn = this.routeIdToShortName.get(mTrip.getRouteId());
+		if (rsn == 5L) {
 			if (Arrays.asList( //
 					WESTWOOD, //
 					DOWNTOWN //
@@ -339,7 +344,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 6L) {
+		} else if (rsn == 6L) {
 			if (Arrays.asList( //
 					COUNTRY_CLUB, //
 					DOWNTOWN //
@@ -347,7 +352,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 7L) {
+		} else if (rsn == 7L) {
 			if (Arrays.asList( //
 					DOWNTOWN, //
 					CINNABAR, //
@@ -356,7 +361,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(CINNABAR_CEDAR, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 11L) {
+		} else if (rsn == 11L) {
 			if (Arrays.asList( //
 					BC_FERRIES, //
 					LANTZVILLE //
@@ -364,7 +369,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(LANTZVILLE, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 15L) {
+		} else if (rsn == 15L) {
 			if (Arrays.asList( //
 					"A " + VI_UNIVERSITY_SHORT, //
 					VI_UNIVERSITY_SHORT + " Only", //
@@ -381,7 +386,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 20L) {
+		} else if (rsn == 20L) {
 			if (Arrays.asList( //
 					COUNTRY_CLUB, // <>
 					DOWNTOWN // <>
@@ -397,14 +402,14 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 25L) {
+		} else if (rsn == 25L) {
 			if (Arrays.asList( //
 					WOODGROVE, //
 					BC_FERRIES).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString(BC_FERRIES, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 40L) {
+		} else if (rsn == 40L) {
 			if (Arrays.asList( //
 					"School Special", //
 					WOODGROVE //
@@ -419,7 +424,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(DOWNTOWN, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 91L) {
+		} else if (rsn == 91L) {
 			if (Arrays.asList( //
 					BC_FERRIES, //
 					WOODGROVE //
@@ -427,7 +432,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				mTrip.setHeadsignString(WOODGROVE, mTrip.getHeadsignId()); //
 				return true;
 			}
-		} else if (mTrip.getRouteId() == 99L) {
+		} else if (rsn == 99L) {
 			if (Arrays.asList( //
 					"Duke Pt", //
 					"Qualicum Beach" //
@@ -447,9 +452,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final String VI_UNIVERSITY_REPLACEMENT = "$2" + VI_UNIVERSITY_SHORT + "$4";
 
 	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+( -)?[\\S]*)", Pattern.CASE_INSENSITIVE);
-
-	private static final Pattern ENDS_WITH_VIA = Pattern.compile("( via .*$)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern STARTS_WITH_TO = Pattern.compile("(^.* to )", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern CLEAN_P1 = Pattern.compile("[\\s]*\\([\\s]*");
 	private static final String CLEAN_P1_REPLACEMENT = " (";
@@ -475,8 +477,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		tripHeadsign = SHUTTLE_.matcher(tripHeadsign).replaceAll(SHUTTLE_REPLACEMENT);
 		tripHeadsign = EXCHANGE_.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
 		tripHeadsign = VI_UNIVERSITY_.matcher(tripHeadsign).replaceAll(VI_UNIVERSITY_REPLACEMENT);
-		tripHeadsign = ENDS_WITH_VIA.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
-		tripHeadsign = STARTS_WITH_TO.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
+		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = CleanUtils.CLEAN_AT.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
@@ -500,7 +501,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public int getStopId(GStop gStop) {
-		return Integer.parseInt(gStop.getStopCode()); // use stop code as stop ID
+	public int getStopId(GStop gStop) { // used by GTFS-RT
+		return super.getStopId(gStop);
 	}
 }
