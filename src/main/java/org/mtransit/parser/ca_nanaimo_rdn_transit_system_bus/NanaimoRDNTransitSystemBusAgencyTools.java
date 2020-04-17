@@ -233,7 +233,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(9L, new RouteTripSpec(9L, // 25 //
+		map2.put(-1L, new RouteTripSpec(-1L, // 25 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
