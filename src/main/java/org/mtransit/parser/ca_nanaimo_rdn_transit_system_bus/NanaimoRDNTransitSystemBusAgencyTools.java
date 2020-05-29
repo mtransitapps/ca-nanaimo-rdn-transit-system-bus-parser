@@ -233,7 +233,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(-1L, new RouteTripSpec(-1L, // 25 //
+		map2.put(19L, new RouteTripSpec(19L, // 25 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -257,22 +257,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
 								Stops.getALL_STOPS().get("110516"), // ++ Country Club Exchange Bay A
 								Stops.getALL_STOPS().get("109880") // Departure Bay Ferry
-						)) //
-				.compileBothTripSort());
-		map2.put(14L, new RouteTripSpec(14L, // 88 //
-				StrategicMappingCommons.OUTBOUND_0, MTrip.HEADSIGN_TYPE_STRING, "Parksville", //
-				StrategicMappingCommons.OUTBOUND_1, MTrip.HEADSIGN_TYPE_STRING, "Wembley Mall") //
-				.addTripSort(StrategicMappingCommons.OUTBOUND_0, //
-						Arrays.asList(//
-								Stops.getALL_STOPS().get("110299"), // Jensen Ave E at Craig
-								Stops.getALL_STOPS().get("110441"), // Pym St N at Jenkins
-								Stops.getALL_STOPS().get("104168") // Wembley Mall AT Wembley Rd
-						)) //
-				.addTripSort(StrategicMappingCommons.OUTBOUND_1, //
-						Arrays.asList(//
-								Stops.getALL_STOPS().get("104168"), // Wembley Mall AT Wembley Rd
-								Stops.getALL_STOPS().get("110280"), // Finholm St S at Morison
-								Stops.getALL_STOPS().get("110299") // Jensen Ave E at Craig
 						)) //
 				.compileBothTripSort());
 		map2.put(16L, new RouteTripSpec(16L, // 97 //
