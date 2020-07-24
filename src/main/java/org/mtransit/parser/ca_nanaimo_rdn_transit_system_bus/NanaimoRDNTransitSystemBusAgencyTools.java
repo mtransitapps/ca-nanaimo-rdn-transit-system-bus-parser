@@ -212,7 +212,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
-		map2.put(6L, new RouteTripSpec(6L, // 11 //
+		map2.put(847L, new RouteTripSpec(847L, // 11 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -233,7 +233,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(19L, new RouteTripSpec(19L, // 25 //
+		map2.put(850L, new RouteTripSpec(850L, // 25 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -259,7 +259,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109880") // Departure Bay Ferry
 						)) //
 				.compileBothTripSort());
-		map2.put(16L, new RouteTripSpec(16L, // 97 //
+		map2.put(857L, new RouteTripSpec(857L, // 97 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", // "West", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "East") // Eaglecrest") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
@@ -278,7 +278,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("110376") // Eastbound Sunrise at Drew
 						)) //
 				.compileBothTripSort());
-		map2.put(17L, new RouteTripSpec(17L, // 98 //
+		map2.put(858L, new RouteTripSpec(858L, // 98 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Island Hwy W") // "Qualicum Beach") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
