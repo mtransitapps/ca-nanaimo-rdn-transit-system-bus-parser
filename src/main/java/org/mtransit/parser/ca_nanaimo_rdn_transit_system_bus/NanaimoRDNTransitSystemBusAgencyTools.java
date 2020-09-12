@@ -163,8 +163,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				if (isGoodEnoughAccepted()) {
 					return AGENCY_COLOR_BLUE;
 				}
-				MTLog.logFatal("Unexpected route color for %s!", gRoute);
-				return null;
+				throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
 			}
 		}
 		return super.getRouteColor(gRoute);
@@ -208,11 +207,13 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final String BC_FERRIES = "BC Ferries";
 	private static final String LANTZVILLE = "Lantzville";
 
+	private static final long ROUTE_ID_0 = 860L;
+
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
-		map2.put(847L, new RouteTripSpec(847L, // 11 //
+		map2.put(ROUTE_ID_0 + 6L, new RouteTripSpec(ROUTE_ID_0 + 6L, // 11 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "West", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
@@ -233,11 +234,11 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.compileBothTripSort());
-		map2.put(850L, new RouteTripSpec(850L, // 25 //
+		map2.put(ROUTE_ID_0 + 9L, new RouteTripSpec(ROUTE_ID_0 + 9L, // 25 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, WOODGROVE, // VI_UNIVERSITY_SHORT
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, BC_FERRIES) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("109880"), // == Departure Bay Ferry
 								Stops.getALL_STOPS().get("109964"), // !== Stewart at Maple
 								Stops.getALL_STOPS().get("109872"), // ========== Front at Gabriola Ferry Term
@@ -253,17 +254,17 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("109925") // Woodgrove Centre Exchange Bay D
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("109925"), // Woodgrove Centre Exchange Bay D
 								Stops.getALL_STOPS().get("110516"), // ++ Country Club Exchange Bay A
 								Stops.getALL_STOPS().get("109880") // Departure Bay Ferry
 						)) //
 				.compileBothTripSort());
-		map2.put(857L, new RouteTripSpec(857L, // 97 //
+		map2.put(ROUTE_ID_0 + 17L, new RouteTripSpec(ROUTE_ID_0 + 17L, // 97 //
 				StrategicMappingCommons.COUNTERCLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", // "West", //
 				StrategicMappingCommons.COUNTERCLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "East") // Eaglecrest") //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("110376"), // Eastbound Sunrise at Drew
 								Stops.getALL_STOPS().get("104080"), // Westbound Pintail at Eaglecrest Dr
 								Stops.getALL_STOPS().get("104113"), // Southbound Eaglecrest farside Mallard
@@ -271,18 +272,18 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("110358") // Southbound Jones at Fern Rd W
 						)) //
 				.addTripSort(StrategicMappingCommons.COUNTERCLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
 								Stops.getALL_STOPS().get("104060"), // ++
 								Stops.getALL_STOPS().get("104061"), // ++
 								Stops.getALL_STOPS().get("110376") // Eastbound Sunrise at Drew
 						)) //
 				.compileBothTripSort());
-		map2.put(858L, new RouteTripSpec(858L, // 98 //
+		map2.put(ROUTE_ID_0 + 18L, new RouteTripSpec(ROUTE_ID_0 + 18L, // 98 //
 				StrategicMappingCommons.CLOCKWISE_0, MTrip.HEADSIGN_TYPE_STRING, "Ravensong", //
 				StrategicMappingCommons.CLOCKWISE_1, MTrip.HEADSIGN_TYPE_STRING, "Island Hwy W") // "Qualicum Beach") //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_0, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("104141"), // Westbound Island Hwy W at 2711 Blk
 								Stops.getALL_STOPS().get("104146"), // Westbound Island Hwy W ACR Beach Dr
 								Stops.getALL_STOPS().get("104147"), // == Southbound Garrett at Parkridge
@@ -291,7 +292,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								Stops.getALL_STOPS().get("110358") // Southbound Jones at Fern Rd W
 						)) //
 				.addTripSort(StrategicMappingCommons.CLOCKWISE_1, //
-						Arrays.asList(//
+						Arrays.asList( //
 								Stops.getALL_STOPS().get("110358"), // Southbound Jones at Fern Rd W
 								Stops.getALL_STOPS().get("104134"), // ++
 								Stops.getALL_STOPS().get("104140"), // Eastbound Crescent Rd W at Memorial
@@ -425,8 +426,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		}
-		MTLog.logFatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
-		return false;
+		throw new MTLog.Fatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
 	}
 
 	private static final Pattern EXCHANGE_ = Pattern.compile("((^|\\W)(exchange)(\\W|$))", Pattern.CASE_INSENSITIVE);
