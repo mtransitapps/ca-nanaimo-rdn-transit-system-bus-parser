@@ -207,7 +207,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final String BC_FERRIES = "BC Ferries";
 	private static final String LANTZVILLE = "Lantzville";
 
-	private static final long ROUTE_ID_0 = 860L;
+	private static final long ROUTE_ID_0 = 880L;
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 
