@@ -12,6 +12,7 @@ import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
 import org.mtransit.parser.gtfs.data.GSpec;
 import org.mtransit.parser.gtfs.data.GStop;
+import org.mtransit.parser.gtfs.data.GStopTime;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
 import org.mtransit.parser.mt.data.MRoute;
@@ -72,10 +73,23 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean excludeTrip(@NotNull GTrip gTrip) {
+		final String tripHeadsignLC = gTrip.getTripHeadsignOrDefault().toLowerCase(Locale.ENGLISH);
+		if (tripHeadsignLC.contains("not in service")) {
+			return true; // exclude
+		}
 		if (this.serviceIdInts != null) {
 			return excludeUselessTripInt(gTrip, this.serviceIdInts);
 		}
 		return super.excludeTrip(gTrip);
+	}
+
+	@Override
+	public boolean excludeStopTime(@NotNull GStopTime gStopTime) {
+		final String stopHeadsignLC = gStopTime.getStopHeadsignOrDefault().toLowerCase(Locale.ENGLISH);
+		if (stopHeadsignLC.contains("not in service")) {
+			return true; // exclude
+		}
+		return super.excludeStopTime(gStopTime);
 	}
 
 	@NotNull
