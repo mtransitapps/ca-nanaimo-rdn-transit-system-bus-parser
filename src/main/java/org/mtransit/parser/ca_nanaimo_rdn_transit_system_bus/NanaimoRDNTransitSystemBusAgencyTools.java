@@ -2,23 +2,16 @@ package org.mtransit.parser.ca_nanaimo_rdn_transit_system_bus;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mtransit.parser.CleanUtils;
+import org.mtransit.commons.CleanUtils;
+import org.mtransit.commons.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
-import org.mtransit.parser.StringUtils;
-import org.mtransit.parser.Utils;
-import org.mtransit.parser.gtfs.data.GCalendar;
-import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
-import org.mtransit.parser.gtfs.data.GSpec;
 import org.mtransit.parser.gtfs.data.GStop;
 import org.mtransit.parser.gtfs.data.GStopTime;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
-import org.mtransit.parser.mt.data.MRoute;
-import org.mtransit.parser.mt.data.MTrip;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -28,47 +21,19 @@ import static org.mtransit.parser.Constants.EMPTY;
 // https://nanaimo.mapstrat.com/current/google_transit.zip
 public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
-	public static void main(@Nullable String[] args) {
-		if (args == null || args.length == 0) {
-			args = new String[3];
-			args[0] = "input/gtfs.zip";
-			args[1] = "../../mtransitapps/ca-nanaimo-rdn-transit-system-bus-android/res/raw/";
-			args[2] = ""; // files-prefix
-		}
+	public static void main(@NotNull String[] args) {
 		new NanaimoRDNTransitSystemBusAgencyTools().start(args);
 	}
 
-	@Nullable
-	private HashSet<Integer> serviceIdInts;
-
 	@Override
-	public void start(@NotNull String[] args) {
-		MTLog.log("Generating RDN Transit System bus data...");
-		long start = System.currentTimeMillis();
-		this.serviceIdInts = extractUsefulServiceIdInts(args, this, true);
-		super.start(args);
-		MTLog.log("Generating RDN Transit System bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+	public boolean defaultExcludeEnabled() {
+		return true;
 	}
 
+	@NotNull
 	@Override
-	public boolean excludingAll() {
-		return this.serviceIdInts != null && this.serviceIdInts.isEmpty();
-	}
-
-	@Override
-	public boolean excludeCalendar(@NotNull GCalendar gCalendar) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarInt(gCalendar, this.serviceIdInts);
-		}
-		return super.excludeCalendar(gCalendar);
-	}
-
-	@Override
-	public boolean excludeCalendarDate(@NotNull GCalendarDate gCalendarDates) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarDateInt(gCalendarDates, this.serviceIdInts);
-		}
-		return super.excludeCalendarDate(gCalendarDates);
+	public String getAgencyName() {
+		return "Nanaimo RDN TS";
 	}
 
 	@Override
@@ -76,9 +41,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		final String tripHeadsignLC = gTrip.getTripHeadsignOrDefault().toLowerCase(Locale.ENGLISH);
 		if (tripHeadsignLC.contains("not in service")) {
 			return true; // exclude
-		}
-		if (this.serviceIdInts != null) {
-			return excludeUselessTripInt(gTrip, this.serviceIdInts);
 		}
 		return super.excludeTrip(gTrip);
 	}
@@ -107,8 +69,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@NotNull
 	@Override
-	public String getRouteLongName(@NotNull GRoute gRoute) {
-		String routeLongName = gRoute.getRouteLongNameOrDefault();
+	public String cleanRouteLongName(@NotNull String routeLongName) {
 		routeLongName = STARTS_WITH_DASH.matcher(routeLongName).replaceAll(EMPTY);
 		routeLongName = CleanUtils.cleanSlashes(routeLongName);
 		routeLongName = CleanUtils.cleanNumbers(routeLongName);
@@ -117,7 +78,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233"; // GREEN (from PDF Corporate Graphic Standards)
-	private static final String AGENCY_COLOR_BLUE = "002C77"; // BLUE (from PDF Corporate Graphic Standards)
+	// private static final String AGENCY_COLOR_BLUE = "002C77"; // BLUE (from PDF Corporate Graphic Standards)
 
 	private static final String AGENCY_COLOR = AGENCY_COLOR_GREEN;
 
@@ -158,9 +119,6 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			case 99: return AGENCY_COLOR_GREEN; // LIGHT GREEN
 			// @formatter:on
 			default:
-				if (isGoodEnoughAccepted()) {
-					return AGENCY_COLOR_BLUE;
-				}
 				throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
 			}
 		}
@@ -168,27 +126,21 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public void setTripHeadsign(@NotNull MRoute mRoute, @NotNull MTrip mTrip, @NotNull GTrip gTrip, @NotNull GSpec gtfs) {
-		mTrip.setHeadsignString(
-				cleanTripHeadsign(gTrip.getTripHeadsignOrDefault()),
-				gTrip.getDirectionIdOrDefault()
-		);
-	}
-
-	@Override
 	public boolean directionFinderEnabled() {
 		return true;
 	}
 
+	private static final Pattern ENDS_WITH_BAY_ABC = Pattern.compile("(( bay | b:)[\\w]$)", Pattern.CASE_INSENSITIVE);
+
+	@NotNull
 	@Override
-	public boolean mergeHeadsign(@NotNull MTrip mTrip, @NotNull MTrip mTripToMerge) {
-		throw new MTLog.Fatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
+	public String cleanDirectionHeadsign(boolean fromStopName, @NotNull String directionHeadSign) {
+		if (fromStopName) {
+			directionHeadSign = ENDS_WITH_BAY_ABC.matcher(directionHeadSign).replaceAll(EMPTY);
+		}
+		directionHeadSign = super.cleanDirectionHeadsign(fromStopName, directionHeadSign);
+		return directionHeadSign;
 	}
-
-	private static final Pattern EXCHANGE_ = Pattern.compile("((^|\\W)(exchange)(\\W|$))", Pattern.CASE_INSENSITIVE);
-	private static final String EXCHANGE_REPLACEMENT = "$2" + "Exch" + "$4";
-
-	private static final Pattern BAY_AZ_ = CleanUtils.cleanWords("bay [a-z]");
 
 	private static final Pattern VI_UNIVERSITY_ = Pattern.compile("((^|\\W)(vi university|viu)(\\W|$))", Pattern.CASE_INSENSITIVE);
 	private static final String VI_UNIVERSITY_REPLACEMENT = "$2" + "VIU" + "$4";
@@ -211,8 +163,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		tripHeadsign = FIX_BEACH_.matcher(tripHeadsign).replaceAll(FIX_BEACH_REPLACEMENT);
 		tripHeadsign = FIX_CINNABAR_.matcher(tripHeadsign).replaceAll(FIX_CINNABAR_REPLACEMENT);
 		tripHeadsign = SHUTTLE_.matcher(tripHeadsign).replaceAll(SHUTTLE_REPLACEMENT);
-		tripHeadsign = EXCHANGE_.matcher(tripHeadsign).replaceAll(EXCHANGE_REPLACEMENT);
-		tripHeadsign = BAY_AZ_.matcher(tripHeadsign).replaceAll(EMPTY);
+		tripHeadsign = ENDS_WITH_BAY_ABC.matcher(tripHeadsign).replaceAll(EMPTY);
 		tripHeadsign = VI_UNIVERSITY_.matcher(tripHeadsign).replaceAll(VI_UNIVERSITY_REPLACEMENT);
 		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
@@ -229,6 +180,7 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern STARTS_WITH_DCOM = Pattern.compile("(^(\\(-DCOM-\\)))", Pattern.CASE_INSENSITIVE);
 	private static final Pattern STARTS_WITH_IMPL = Pattern.compile("(^(\\(-IMPL-\\)))", Pattern.CASE_INSENSITIVE);
+
 	private static final Pattern FIX_BOUND = Pattern.compile("(boudn)", Pattern.CASE_INSENSITIVE);
 	private static final String FIX_BOUND_REPLACEMENT = "bound";
 
@@ -240,8 +192,8 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		gStopName = STARTS_WITH_IMPL.matcher(gStopName).replaceAll(EMPTY);
 		gStopName = FIX_BOUND.matcher(gStopName).replaceAll(FIX_BOUND_REPLACEMENT);
 		gStopName = CleanUtils.cleanBounds(gStopName);
+		gStopName = CleanUtils.CLEAN_AND.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
-		gStopName = EXCHANGE_.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
 	}
