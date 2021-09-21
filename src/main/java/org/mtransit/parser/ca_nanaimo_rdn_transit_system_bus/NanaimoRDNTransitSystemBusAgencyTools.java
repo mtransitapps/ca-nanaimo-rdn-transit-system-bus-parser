@@ -3,7 +3,6 @@ package org.mtransit.parser.ca_nanaimo_rdn_transit_system_bus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mtransit.commons.CleanUtils;
-import org.mtransit.commons.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
 import org.mtransit.parser.gtfs.data.GRoute;
@@ -12,10 +11,11 @@ import org.mtransit.parser.gtfs.data.GStopTime;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import static org.mtransit.parser.Constants.EMPTY;
+import static org.mtransit.commons.Constants.EMPTY;
 
 // https://www.bctransit.com/open-data
 // https://nanaimo.mapstrat.com/current/google_transit.zip
@@ -23,6 +23,12 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
 		new NanaimoRDNTransitSystemBusAgencyTools().start(args);
+	}
+
+	@Nullable
+	@Override
+	public List<Locale> getSupportedLanguages() {
+		return LANG_EN;
 	}
 
 	@Override
@@ -61,8 +67,18 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public long getRouteId(@NotNull GRoute gRoute) { // used by GTFS-RT
-		return super.getRouteId(gRoute);
+	public boolean defaultRouteIdEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean useRouteShortNameForRouteId() {
+		return false; // route ID used by GTFS RT
+	}
+
+	@Override
+	public boolean defaultRouteLongNameEnabled() {
+		return true;
 	}
 
 	private static final Pattern STARTS_WITH_DASH = Pattern.compile("(^- )", Pattern.CASE_INSENSITIVE);
@@ -75,6 +91,11 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		routeLongName = CleanUtils.cleanNumbers(routeLongName);
 		routeLongName = CleanUtils.cleanStreetTypes(routeLongName);
 		return CleanUtils.cleanLabel(routeLongName);
+	}
+
+	@Override
+	public boolean defaultAgencyColorEnabled() {
+		return true;
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233"; // GREEN (from PDF Corporate Graphic Standards)
@@ -94,35 +115,32 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@SuppressWarnings("DuplicateBranchesInSwitch")
 	@Nullable
 	@Override
-	public String getRouteColor(@NotNull GRoute gRoute) {
-		if (StringUtils.isEmpty(gRoute.getRouteColor())) {
-			int rsn = Integer.parseInt(gRoute.getRouteShortName());
-			switch (rsn) {
-			// @formatter:off
-			case 1: return ROUTE_COLOR_LOCAL;
-			case 5: return ROUTE_COLOR_LOCAL;
-			case 6: return ROUTE_COLOR_LOCAL;
-			case 7: return ROUTE_COLOR_LOCAL;
-			case 11: return ROUTE_COLOR_LOCAL;
-			case 15: return ROUTE_COLOR_LOCAL;
-			case 20: return ROUTE_COLOR_LOCAL;
-			case 25: return ROUTE_COLOR_LOCAL;
-			case 30: return ROUTE_COLOR_LOCAL;
-			case 40: return ROUTE_COLOR_FREQUENT;
-			case 50: return ROUTE_COLOR_LOCAL;
-			case 88: return "B3AA7E"; // LIGHT BROWN
-			case 90: return "4F6F19"; // DARK GREEN
-			case 91: return ROUTE_COLOR_LOCAL;
-			case 92: return ROUTE_COLOR_LOCAL; // ?
-			case 97: return ROUTE_COLOR_LOCAL;
-			case 98: return ROUTE_COLOR_LOCAL;
-			case 99: return AGENCY_COLOR_GREEN; // LIGHT GREEN
-			// @formatter:on
-			default:
-				throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
-			}
+	public String provideMissingRouteColor(@NotNull GRoute gRoute) {
+		final int rsn = Integer.parseInt(gRoute.getRouteShortName());
+		switch (rsn) {
+		// @formatter:off
+		case 1: return ROUTE_COLOR_LOCAL;
+		case 5: return ROUTE_COLOR_LOCAL;
+		case 6: return ROUTE_COLOR_LOCAL;
+		case 7: return ROUTE_COLOR_LOCAL;
+		case 11: return ROUTE_COLOR_LOCAL;
+		case 15: return ROUTE_COLOR_LOCAL;
+		case 20: return ROUTE_COLOR_LOCAL;
+		case 25: return ROUTE_COLOR_LOCAL;
+		case 30: return ROUTE_COLOR_LOCAL;
+		case 40: return ROUTE_COLOR_FREQUENT;
+		case 50: return ROUTE_COLOR_LOCAL;
+		case 88: return "B3AA7E"; // LIGHT BROWN
+		case 90: return "4F6F19"; // DARK GREEN
+		case 91: return ROUTE_COLOR_LOCAL;
+		case 92: return ROUTE_COLOR_LOCAL; // ?
+		case 97: return ROUTE_COLOR_LOCAL;
+		case 98: return ROUTE_COLOR_LOCAL;
+		case 99: return AGENCY_COLOR_GREEN; // LIGHT GREEN
+		// @formatter:on
+		default:
+			throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
 		}
-		return super.getRouteColor(gRoute);
 	}
 
 	@Override
