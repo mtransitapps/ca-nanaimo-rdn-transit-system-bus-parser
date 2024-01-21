@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 import static org.mtransit.commons.Constants.EMPTY;
 
 // https://www.bctransit.com/open-data
-// https://nanaimo.mapstrat.com/current/google_transit.zip
 public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
@@ -74,6 +73,11 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public boolean useRouteShortNameForRouteId() {
 		return false; // route ID used by GTFS RT
+	}
+
+	@Override
+	public @Nullable String getRouteIdCleanupRegex() {
+		return "\\-[A-Z]+$";
 	}
 
 	@Override
@@ -148,22 +152,22 @@ public class NanaimoRDNTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return true;
 	}
 
-	private static final Pattern ENDS_WITH_BAY_ABC = Pattern.compile("(( bay | b:)[\\w]$)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern ENDS_WITH_BAY_ABC = Pattern.compile("(( bay | b:)\\w$)", Pattern.CASE_INSENSITIVE);
 
 	@NotNull
 	@Override
-	public String cleanDirectionHeadsign(boolean fromStopName, @NotNull String directionHeadSign) {
+	public String cleanDirectionHeadsign(int directionId, boolean fromStopName, @NotNull String directionHeadSign) {
 		if (fromStopName) {
 			directionHeadSign = ENDS_WITH_BAY_ABC.matcher(directionHeadSign).replaceAll(EMPTY);
 		}
-		directionHeadSign = super.cleanDirectionHeadsign(fromStopName, directionHeadSign);
+		directionHeadSign = super.cleanDirectionHeadsign(directionId, fromStopName, directionHeadSign);
 		return directionHeadSign;
 	}
 
 	private static final Pattern VI_UNIVERSITY_ = Pattern.compile("((^|\\W)(vi university|viu)(\\W|$))", Pattern.CASE_INSENSITIVE);
 	private static final String VI_UNIVERSITY_REPLACEMENT = "$2" + "VIU" + "$4";
 
-	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^[\\d]+( -)?[\\S]*)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("(^\\d+( -)?\\S*)", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern FIX_BEACH_ = Pattern.compile("((^|\\W)(Bch)(\\W|$))", Pattern.CASE_INSENSITIVE);
 	private static final String FIX_BEACH_REPLACEMENT = "$2" + "Beach" + "$4";
